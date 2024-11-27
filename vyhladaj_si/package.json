@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "csfd-api": "^1.2.1",
+    "node-csfd-api": "^2.10.0",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },
