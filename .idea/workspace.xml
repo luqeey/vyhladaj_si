@@ -5,31 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vyhladaj_si.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/LandingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/MoviePage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/SeriesPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/assets/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/assets/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/assets/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/TheWelcome.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/WelcomeItem.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/icons/IconCommunity.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/icons/IconDocumentation.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/icons/IconEcosystem.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/icons/IconSupport.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/icons/IconTooling.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/views/AboutView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/views/HomeView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
