@@ -31,11 +31,11 @@ const router = createRouter({
     },
     {
       path: '/detail-movie',
-      name: 'home',
+      name: 'detail movie',
       component: DetailMovie,
     },{
       path: '/detail-tv-series',
-      name: 'home',
+      name: 'detail series',
       component: DetailSeries,
     },
   ],

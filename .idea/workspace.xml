@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/movies/DetailMovie.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/series/DetailSeries.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/components/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/components/NavBar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/views/MoviePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/movies/MoviePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vyhladaj_si/src/views/SeriesPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vyhladaj_si/src/views/series/SeriesPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "luqey",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +82,7 @@
       <workItem from="1732093247828" duration="433000" />
       <workItem from="1732519912522" duration="1653000" />
       <workItem from="1732521632850" duration="833000" />
+      <workItem from="1736752917478" duration="793000" />
     </task>
     <servers />
   </component>
