@@ -5,6 +5,7 @@
     </router-link>
     <router-link to="/movies" class="text-[#F8E7F8]">Movies</router-link>
     <router-link to="/tv-series" class="text-[#F8E7F8]">Series</router-link>
+      <router-link to="/cinemas" class="text-[#F8E7F8]">Cinemas</router-link>
   </div>
 </template>
 <script setup lang="ts">
