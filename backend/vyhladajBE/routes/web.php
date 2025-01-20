@@ -8,9 +8,10 @@ Route::get('/', function () {
 });
 
 Route::get('/api/search-cinemas', function () {
+    $location = request('location', 'Bratislava, Slovakia');
     $response = Http::get('https://serpapi.com/search.json', [
         'q' => 'cinemas near me',
-        'location' => 'Bratislava, Slovakia',
+        'location' => $location,
         'hl' => 'en',
         'gl' => 'sk',
         'google_domain' => 'google.com',

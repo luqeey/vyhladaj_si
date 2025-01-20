@@ -22,9 +22,10 @@
             <ul>
                 <li v-for="result in results" :key="result.place_id">
                     <p>{{ result.title }}</p>
+                    <p><a :href="result.links.website" target="_blank">{{ result.links.website }}</a></p>
                     <p>{{ result.address }}</p>
                     <p>Rating: {{ result.rating }} ({{ result.reviews }} reviews)</p>
-                    <img :src="result.thumbnail" alt="Thumbnail" />
+                    <img :src="result.thumbnail" alt="Thumbnail"/>
                 </li>
             </ul>
         </div>
@@ -52,10 +53,9 @@ export default {
                 try {
                     const response = await axios.get('/api/search-cinemas', {
                         params: {
-                            q: this.searchQuery
+                            location: this.searchQuery // Use the searchQuery value as the location
                         }
                     });
-                    console.log(response.data);
                     this.results = response.data.local_results?.places || [];
                 } catch (error) {
                     console.error(error);
