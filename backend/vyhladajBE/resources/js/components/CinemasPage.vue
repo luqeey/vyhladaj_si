@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="h-screen bg-[#121212]">
-            <NavBar />
+        <div style="height: 10rem" class="h-screen  bg-[#121212]">
             <div class="p-4">
                 <input
                     type="text"
@@ -17,8 +16,8 @@
                 </button>
             </div>
         </div>
-        <h1>Cinemas</h1>
-        <div v-if="results && results.length">
+        <h1 class="bg-[#121212]" >Cinemas</h1>
+        <div v-if="results && results.length" class="bg-[#121212]" >
             <ul>
                 <li v-for="result in results" :key="result.place_id">
                     <p>{{ result.title }}</p>
