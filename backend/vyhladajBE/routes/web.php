@@ -20,3 +20,7 @@ Route::get('/api/search-cinemas', function () {
 
     return $response->json();
 });
+
+Route::get('/{pathMatch}', function () {
+    return view('welcome');
+})->where('pathMatch', '.*');
