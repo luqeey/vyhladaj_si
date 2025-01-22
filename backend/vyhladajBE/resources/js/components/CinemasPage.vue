@@ -17,14 +17,17 @@
             </div>
         </div>
         <h1 class="bg-[#121212]" >Cinemas</h1>
-        <div v-if="results && results.length" class="bg-[#121212]" >
-            <ul>
-                <li v-for="result in results" :key="result.place_id">
-                    <p>{{ result.title }}</p>
-                    <p><a :href="result.links.website" target="_blank">{{ result.links.website }}</a></p>
-                    <p>{{ result.address }}</p>
-                    <p>Rating: {{ result.rating }} ({{ result.reviews }} reviews)</p>
-                    <img :src="result.thumbnail" alt="Thumbnail"/>
+        <div v-if="results && results.length" class="bg-[#121212]  " >
+            <ul class="flex flex-col" style="align-items: center">
+                <li v-for="result in results" :key="result.place_id" class="flex flex-row mb-6" >
+                    <img :src="result.thumbnail" alt="Thumbnail" class="h-[15rem] rounded-md " />
+                    <div class=" flex flex-col justify-center ml-3">
+                        <p class="text-2xl text-slate-100	 " >{{ result.title }}</p>
+                        <p><a :href="result.links.website" target="_blank">{{ result.links.website }}</a></p>
+                        <p>{{ result.address }}</p>
+                        <p>Rating: {{ result.rating }} ({{ result.reviews }} reviews)</p>
+                    </div>
+
                 </li>
             </ul>
         </div>
