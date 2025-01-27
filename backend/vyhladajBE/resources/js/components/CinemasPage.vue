@@ -1,29 +1,28 @@
 <template>
     <div>
-        <div style="height: 10rem" class="h-screen  bg-[#121212]">
-            <div class="p-4">
+        <div style="height: 10rem" class="h-screen  bg-[#121212] flex justify-center">
+            <div class="p-4 flex  w-[505px] h-[5rem] justify-between ">
                 <input
                     type="text"
                     v-model="searchQuery"
                     placeholder="Search for cinemas..."
-                    class="w-full bg-[#1C1C1C] text-white placeholder-gray-400 rounded-full border border-gray-600 focus:outline-none pl-4 pr-4 py-3"
+                    class=" w-[20rem] mr-3 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-full border border-gray-600 focus:outline-none pl-4 pr-4 py-3"
                 />
                 <button
                     @click="searchCinemas"
-                    class="mt-2 bg-blue-500 text-white rounded-full px-4 py-2"
+                    class="  h-[45px] bg-blue-500 text-white rounded-full px-4 py-2"
                 >
                     Search
                 </button>
             </div>
         </div>
-        <h1 class="bg-[#121212]" >Cinemas</h1>
         <div v-if="results && results.length" class="bg-[#121212]  " >
             <ul class="flex flex-col" style="align-items: center">
-                <li v-for="result in results" :key="result.place_id" class="flex flex-row mb-6" >
+                <li v-for="result in results" :key="result.place_id" class="flex flex-row mb-6 border border-[#A9A9A9] p-3 rounded-md " >
                     <img :src="result.thumbnail" alt="Thumbnail" class="h-[15rem] rounded-md " />
-                    <div class=" flex flex-col justify-center ml-3">
+                    <div class=" flex flex-col justify-center ml-10 mr-6 ">
                         <p class="text-2xl text-slate-100	 " >{{ result.title }}</p>
-                        <p><a :href="result.links.website" target="_blank">{{ result.links.website }}</a></p>
+                        <p><a :href="result.links.website" target="_blank">www</a></p>
                         <p>{{ result.address }}</p>
                         <p>Rating: {{ result.rating }} ({{ result.reviews }} reviews)</p>
                     </div>
