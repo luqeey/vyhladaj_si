@@ -5,7 +5,7 @@
         <input
           type="search"
           placeholder="Search for movie or series..."
-          class="bg-[#1C1C1C]/60 backdrop-blur-md text-white placeholder-gray-400 rounded-full border border-gray-600 z-30 focus:outline-none pl-12 pr-4 py-3 w-[28rem]"
+          class="bg-[#1C1C1C]/60 backdrop-blur-md text-white placeholder-gray-400 rounded-full border border-gray-600 z-30 focus:outline-none pl-4 pr-4 py-3 w-full sm:w-[24rem] md:w-[28rem] lg:w-[32rem]"
         />
       </div>
     </div>
