@@ -2,13 +2,8 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div v-for="release in releases" :key="release.id" class="image-list">
-                    <img
-                        :src="release.poster_url"
-                        alt="Poster Image"
-                        class="poster-image"
-                        @error="handleImageError"
-                    />
+                <div v-for="release in releases" :key="release.id">
+                    <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
                 </div>
             </div>
         </div>
