@@ -3,11 +3,11 @@
         <h1>Movie NachoVerse</h1>
         <ul>
             <li v-for="release in releases" :key="release.id">
-                <img :src="release.poster_url" alt="Poster" />
+                <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster" />
                 <div>
                     <h2>{{ release.title }}</h2>
-                    <p>Type: {{ release.type }}</p>
-                    <p>Release Date: {{ release.source_release_date }}</p>
+                    <p>Type: {{ release.media_type }}</p>
+                    <p>Release Date: {{ release.release_date }}</p>
                     <p>Platform: {{ release.source_name }}</p>
                     <p v-if="release.is_original">Original Release</p>
                 </div>
@@ -36,12 +36,12 @@ export default {
     methods: {
         async fetchReleases() {
             try {
-                const response = await axios.get('https://api.watchmode.com/v1/releases/', {
+                const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
                     params: {
-                        apiKey: 'ZL1gWp7kjjVLORk0vBMFak648LnwiTofK4LbN2Ue'
+                        api_key: '27669d5eff252733bade61094dcd4d38'
                     }
                 });
-                this.releases = response.data.releases;
+                this.releases = response.data.results;
             } catch (error) {
                 console.error('Error fetching releases:', error);
             }

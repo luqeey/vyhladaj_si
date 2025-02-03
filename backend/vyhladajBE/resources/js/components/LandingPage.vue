@@ -31,20 +31,18 @@
           :key="`first-${i}-${j}`"
           :src="image.poster_url"
           alt="Poster Image"
-          class="w-full h-auto rounded-sm"
+          class="w-full h-auto rounded-sm object-cover"
           @error="handleImageError"
       />
 
-      <!-- Duplicated Set of Images -->
       <img
           v-for="(image, j) in column"
-          :key="`first-${i}-${j}`"
+          :key="`second-${i}-${j}`"
           :src="image.poster_url"
           alt="Poster Image"
-          class="w-full h-auto rounded-sm"
+          class="w-full h-auto rounded-sm object-cover"
           @error="handleImageError"
       />
-
   </div>
 </div>
 
@@ -135,13 +133,22 @@ section {
 .scroll-column {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    animation: scroll 90s infinite linear; /* Ensure smooth infinite scroll */
+    gap: 0px; /* Remove spacing between images */
+    animation: scroll 90s infinite linear;
+}
+
+.image-list img {
+    width: 100%; /* Ensures images take full width */
+    height: auto; /* Maintain original aspect ratio */
+    object-fit: cover;
+    display: block;
 }
 
 .image-list {
     display: flex;
     flex-direction: column;
+    padding: 0;
+    margin: 0;
 }
 
 /* Keyframe Animation for Infinite Scrolling */
