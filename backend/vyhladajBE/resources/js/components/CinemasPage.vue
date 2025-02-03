@@ -22,9 +22,9 @@
                 <li v-for="result in results" :key="result.place_id" class="flex flex-row mb-6 border border-[#A9A9A9] p-3 rounded-md " >
                     <img :src="result.thumbnail" alt="Thumbnail" class="h-[15rem] rounded-md " />
                     <div class=" flex flex-col justify-center ml-10 mr-6 ">
-                        <p class="text-2xl text-slate-100	break-all w-[200px]  " >{{ result.title }}</p>
+                        <p class="text-2xl text-slate-100	break-words w-[200px]  " >{{ result.title }}</p>
                         <p><a :href="result.links.website" target="_blank">webstranka tu</a></p>
-                        <p class="break-all w-[200px]" >{{ result.address }}</p>
+                        <p class="break-words w-[200px]" >{{ result.address }}</p>
                         <p>Rating: {{ result.rating }} ({{ result.reviews }} reviews)</p>
                     </div>
 
