@@ -1,16 +1,17 @@
 <template>
-    <div>
-        <h1>Series NachoVerse</h1>
-        <ul v-if="seriesList.length">
-            <li v-for="series in seriesList" :key="series.id">
-                <h2>{{ series.title }}</h2>
-                <p>Year: {{ series.year }}</p>
-                <p>Type: {{ series.type }}</p>
-                <p>IMDB ID: {{ series.imdb_id }}</p>
-                <p>TMDB ID: {{ series.tmdb_id }}</p>
-            </li>
-        </ul>
-        <p v-else>No series found.</p>
+    <div class="background-color">
+        <div class="background">
+            <div class="grid-wrapper">
+                <div v-for="release in releases" :key="release.id" class="image-list">
+                    <img
+                        :src="release.poster_url"
+                        alt="Poster Image"
+                        class="poster-image"
+                        @error="handleImageError"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,51 +20,77 @@ import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 
 export default {
-    name: 'SeriesPage',
+    name: 'MoviePage',
     components: {
         NavBar
     },
     data() {
         return {
-            seriesList: []
+            releases: []
         };
     },
     mounted() {
-        this.fetchSeries();
+        this.fetchReleases();
     },
     methods: {
-        async fetchSeries() {
+        async fetchReleases() {
             try {
-                const response = await axios.get('https://api.watchmode.com/v1/list-titles/', {
+                const response = await axios.get('https://api.watchmode.com/v1/releases/', {
                     params: {
                         apiKey: 'ZL1gWp7kjjVLORk0vBMFak648LnwiTofK4LbN2Ue'
                     }
                 });
-                this.seriesList = response.data.titles;
+                this.releases = response.data.releases;
             } catch (error) {
-                console.error('Error fetching series:', error);
-                this.seriesList = [];
+                console.error('Error fetching releases:', error);
             }
+        },
+        handleImageError(event) {
+            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
         }
     }
 };
 </script>
 
 <style scoped>
-ul {
-    list-style-type: none;
-    padding: 0;
+.background-color {
+    background-color: rgba(28, 28, 28, 0.6);
+    min-height: 100vh;
+    width: 100%;
 }
 
-li {
-    margin-bottom: 1rem;
+.background {
+    overflow: hidden;
+    position: absolute;
+    left: 80px;
+    width: calc(100% - 160px);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-h2 {
-    margin: 0;
+.grid-wrapper {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-p {
-    margin: 0.5rem 0;
+.image-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster-image {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 900px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
 }
 </style>
