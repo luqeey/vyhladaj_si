@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/CinemasPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/CinemasPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/MoviePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/MoviePage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +50,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;maxim&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;luqey&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/eliasko/Documents/GitHub/vyhladaj_si/backend/vyhladajBE/resources/js/components&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -57,7 +58,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/PhpStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -84,7 +85,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PS-243.23654.168" />
+        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.168" />
       </set>
     </attachedChunks>
   </component>
@@ -104,6 +106,8 @@
       <workItem from="1737359073865" duration="203000" />
       <workItem from="1737529903846" duration="5969000" />
       <workItem from="1737962811859" duration="4535000" />
+      <workItem from="1738568246123" duration="2801000" />
+      <workItem from="1738571115190" duration="1048000" />
     </task>
     <servers />
   </component>
