@@ -1,18 +1,17 @@
 <template>
-    <div>
-        <h1>Movie NachoVerse</h1>
-        <ul>
-            <li v-for="release in releases" :key="release.id">
-                <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster" />
-                <div>
-                    <h2>{{ release.title }}</h2>
-                    <p>Type: {{ release.media_type }}</p>
-                    <p>Release Date: {{ release.release_date }}</p>
-                    <p>Platform: {{ release.source_name }}</p>
-                    <p v-if="release.is_original">Original Release</p>
+    <div class="background-color">
+        <div class="background">
+            <div class="grid-wrapper">
+                <div v-for="release in releases" :key="release.id" class="image-list">
+                    <img
+                        :src="release.poster_url"
+                        alt="Poster Image"
+                        class="poster-image"
+                        @error="handleImageError"
+                    />
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,31 +44,53 @@ export default {
             } catch (error) {
                 console.error('Error fetching releases:', error);
             }
+        },
+        handleImageError(event) {
+            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
         }
     }
 };
 </script>
 
 <style scoped>
-ul {
-    list-style-type: none;
-    padding: 0;
+.background-color {
+    background-color: rgba(28, 28, 28, 0.6);
+    min-height: 100vh;
+    width: 100%;
 }
 
-li {
+.background {
+    overflow: hidden;
+    position: absolute;
+    left: 80px;
+    width: calc(100% - 160px);
+    z-index: 10;
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
-img {
-    width: 100px;
-    height: auto;
-    margin-right: 1rem;
+.grid-wrapper {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-div {
+.image-list {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster-image {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 900px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
 }
 </style>
