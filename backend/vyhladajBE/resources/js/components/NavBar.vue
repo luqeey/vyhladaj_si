@@ -1,7 +1,8 @@
+<!-- Navbar.vue -->
 <template>
-  <div class="bg-[#121212]">
+  <div class="bg-[#121212] relative navbar">
     <!-- Navbar -->
-    <div class="flex items-center h-[70px] justify-between px-8 lg:px-16 relative z-10">
+    <div class="flex items-center h-[70px] justify-between px-8 lg:px-16 relative z-50">
       <router-link to="/" class="text-[#F8E7F8]">
         <img class="w-52" src="@/components/nachoverse-logo.png" alt="Logo">
       </router-link>
@@ -44,13 +45,13 @@
 
     <!-- Mobile Menu -->
     <div 
-  class="md:hidden flex flex-col items-center bg-[#121212] text-[#F8E7F8] space-y-4 py-4 fixed inset-x-0 top-[70px] z-50"
-  v-show="menuOpen"
->
-  <router-link to="/movies" @click="closeMenu">Movies</router-link>
-  <router-link to="/tv-series" @click="closeMenu">Series</router-link>
-  <router-link to="/cinemas" @click="closeMenu">Cinemas</router-link>
-</div>
+      class="md:hidden flex flex-col items-center bg-[#121212] text-[#F8E7F8] space-y-4 py-4 fixed inset-x-0 top-[70px] z-[999] shadow-lg"
+      v-show="menuOpen"
+    >
+      <router-link to="/movies" @click="closeMenu">Movies</router-link>
+      <router-link to="/tv-series" @click="closeMenu">Series</router-link>
+      <router-link to="/cinemas" @click="closeMenu">Cinemas</router-link>
+    </div>
   </div>
 </template>
 
@@ -88,7 +89,14 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Add spacing and visibility animations */
+/* Ensure navbar has no extra space below */
+.navbar {
+  height: 70px; /* Fixed height */
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Transition animations */
 button, .mobile-menu {
   transition: all 0.3s ease-in-out;
 }
