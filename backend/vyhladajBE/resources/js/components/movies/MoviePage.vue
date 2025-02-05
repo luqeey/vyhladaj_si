@@ -6,6 +6,7 @@
                     <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
                 </div>
             </div>
+            <button @click="loadMore" v-if="currentPage < totalPages" class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">Load More</button>
         </div>
     </div>
 </template>
@@ -21,7 +22,9 @@ export default {
     },
     data() {
         return {
-            releases: []
+            releases: [],
+            currentPage: 1,
+            totalPages: 1
         };
     },
     mounted() {
@@ -32,12 +35,21 @@ export default {
             try {
                 const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
                     params: {
-                        api_key: '27669d5eff252733bade61094dcd4d38'
+                        api_key: '27669d5eff252733bade61094dcd4d38',
+                        page: this.currentPage
                     }
                 });
-                this.releases = response.data.results;
+                const newReleases = response.data.results;
+                this.releases = [...this.releases, ...newReleases];
+                this.totalPages = response.data.total_pages;
             } catch (error) {
                 console.error('Error fetching releases:', error);
+            }
+        },
+        async loadMore() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                await this.fetchReleases();
             }
         },
         handleImageError(event) {
@@ -61,6 +73,7 @@ export default {
     width: calc(100% - 160px);
     z-index: 10;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -72,15 +85,23 @@ export default {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-.image-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .poster-image {
     width: 100%;
     height: auto;
+}
+
+.load-more-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #1C1C1C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.load-more-button:hover {
+    background-color: #333;
 }
 
 @media (max-width: 900px) {
