@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/SeriesPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/SeriesPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/DetailMovie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/DetailMovie.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +31,9 @@
     &quot;accountId&quot;: &quot;9a6f7ae9-cdea-44ad-8302-390917749a36&quot;
   }
 }</component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/backend/vyhladajBE/package.json" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/bin/php" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -50,7 +52,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "maxim",
     "last_opened_file_path": "/Users/eliasko/Documents/GitHub/vyhladaj_si/backend/vyhladajBE/resources/js/components",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
