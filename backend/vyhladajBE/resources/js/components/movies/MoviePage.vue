@@ -2,7 +2,7 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div v-for="release in releases" :key="release.id">
+                <div v-for="release in releases" :key="release.id" @click="goToMovieDetail(release.id)">
                     <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
                 </div>
             </div>
@@ -54,6 +54,9 @@ export default {
         },
         handleImageError(event) {
             event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
+        },
+        goToMovieDetail(movieId) {
+            this.$router.push({ name: 'detail movie', params: { id: movieId } });
         }
     }
 };
@@ -88,6 +91,7 @@ export default {
 .poster-image {
     width: 100%;
     height: auto;
+    cursor: pointer;
 }
 
 .load-more-button {

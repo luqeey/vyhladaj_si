@@ -30,11 +30,11 @@ const router = createRouter({
             component: CinemasPage,
         },
         {
-            path: '/detail-movie',
+            path: '/detail-movie/:id',
             name: 'detail movie',
             component: DetailMovie,
         },{
-            path: '/detail-tv-series',
+            path: '/detail-tv-series/:id',
             name: 'detail series',
             component: DetailSeries,
         },
