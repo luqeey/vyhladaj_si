@@ -22,7 +22,7 @@
                 </button>
             </div>
         </div>
-        <div v-if="results && results.length" class="mt-6 w-full max-w-3xl">
+        <div v-if="results && results.length" class="mt-6 w-full max-w-3xl mb-16"> ">
             <ul class="flex flex-col items-center space-y-6">
                 <li
                     v-for="result in results"
