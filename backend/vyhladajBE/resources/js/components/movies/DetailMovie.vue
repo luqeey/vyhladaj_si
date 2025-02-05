@@ -4,7 +4,7 @@
         <div
             v-if="movie"
             class="absolute inset-0 z-0 bg-cover bg-center blur-xl opacity-25"
-            :style="{ backgroundImage: url(`https://image.tmdb.org/t/p/original${movie.poster_path}`) }"
+            :style="{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.poster_path})` }"
         ></div>
 
         <!-- Main Content -->
@@ -34,8 +34,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <!-- Loading Spinner -->
@@ -62,14 +60,14 @@ export default {
         async fetchMovieDetail() {
             const movieId = this.$route.params.id;
             try {
-                const response = await axios.get("https://api.themoviedb.org/3/movie/${movieId}", {
-                params: { api_key: '27669d5eff252733bade61094dcd4d38' },
-            });
-            this.movie = response.data;
-        } catch (error) {
-            console.error('Error fetching movie details:', error);
-        }
+                const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+                    params: { api_key: '27669d5eff252733bade61094dcd4d38' },
+                });
+                this.movie = response.data;
+            } catch (error) {
+                console.error('Error fetching movie details:', error);
+            }
+        },
     },
-},
 };
 </script>
