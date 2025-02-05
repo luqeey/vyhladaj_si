@@ -1,16 +1,13 @@
 <template>
-    <div>
-        <h1>Series NachoVerse</h1>
-        <ul v-if="seriesList.length">
-            <li v-for="series in seriesList" :key="series.id">
-                <h2>{{ series.title }}</h2>
-                <p>Year: {{ series.year }}</p>
-                <p>Type: {{ series.type }}</p>
-                <p>IMDB ID: {{ series.imdb_id }}</p>
-                <p>TMDB ID: {{ series.tmdb_id }}</p>
-            </li>
-        </ul>
-        <p v-else>No series found.</p>
+    <div class="background-color">
+        <div class="background">
+            <div class="grid-wrapper">
+                <div v-for="release in releases" :key="release.id" @click="goToSeriesDetail(release.id)">
+                    <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
+                </div>
+            </div>
+            <button @click="loadMore" v-if="currentPage < totalPages" class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">Load More</button>
+        </div>
     </div>
 </template>
 
@@ -25,45 +22,95 @@ export default {
     },
     data() {
         return {
-            seriesList: []
+            releases: [],
+            currentPage: 1,
+            totalPages: 1
         };
     },
     mounted() {
-        this.fetchSeries();
+        this.fetchReleases();
     },
     methods: {
-        async fetchSeries() {
+        async fetchReleases() {
             try {
-                const response = await axios.get('https://api.watchmode.com/v1/list-titles/', {
+                const response = await axios.get('https://api.themoviedb.org/3/tv/popular', {
                     params: {
-                        apiKey: 'ZL1gWp7kjjVLORk0vBMFak648LnwiTofK4LbN2Ue'
+                        api_key: '27669d5eff252733bade61094dcd4d38',
+                        page: this.currentPage
                     }
                 });
-                this.seriesList = response.data.titles;
+                const newReleases = response.data.results;
+                this.releases = [...this.releases, ...newReleases];
+                this.totalPages = response.data.total_pages;
             } catch (error) {
-                console.error('Error fetching series:', error);
-                this.seriesList = [];
+                console.error('Error fetching releases:', error);
             }
+        },
+        async loadMore() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                await this.fetchReleases();
+            }
+        },
+        handleImageError(event) {
+            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
+        },
+        goToSeriesDetail(seriesId) {
+            this.$router.push({ name: 'detail series', params: { id: seriesId } });
         }
     }
 };
 </script>
 
 <style scoped>
-ul {
-    list-style-type: none;
-    padding: 0;
+.background-color {
+    background-color: rgba(28, 28, 28, 0.6);
+    min-height: 100vh;
+    width: 100%;
 }
 
-li {
-    margin-bottom: 1rem;
+.background {
+    overflow: hidden;
+    position: absolute;
+    left: 80px;
+    width: calc(100% - 160px);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-h2 {
-    margin: 0;
+.grid-wrapper {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-p {
-    margin: 0.5rem 0;
+.poster-image {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.load-more-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #1C1C1C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.load-more-button:hover {
+    background-color: #333;
+}
+
+@media (max-width: 900px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
 }
 </style>

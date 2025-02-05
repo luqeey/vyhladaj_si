@@ -1,40 +1,45 @@
 <template>
-    <div>
-        <h1>Detail Series</h1>
+    <div class="h-screen bg-[#121212]">
         <div v-if="series">
-            <img :src="series.poster" alt="Poster" />
-            <div>
-                <h2>{{ series.title }}</h2>
-                <p>Original Title: {{ series.original_title }}</p>
-                <p>Plot Overview: {{ series.plot_overview }}</p>
-                <p>Type: {{ series.type }}</p>
-                <p>Year: {{ series.year }} - {{ series.end_year }}</p>
-                <p>Release Date: {{ series.release_date }}</p>
-                <p>IMDB ID: {{ series.imdb_id }}</p>
-                <p>TMDB ID: {{ series.tmdb_id }}</p>
-                <p>Genres: {{ series.genre_names.join(', ') }}</p>
-                <p>User Rating: {{ series.user_rating }}</p>
-                <p>Critic Score: {{ series.critic_score }}</p>
-                <p>US Rating: {{ series.us_rating }}</p>
-                <p>Network: {{ series.network_names.join(', ') }}</p>
-                <p>Trailer: <a :href="series.trailer" target="_blank">Watch Trailer</a></p>
-                <div>
-                    <p>Seasons:</p>
-                    <ul>
-                        <li v-for="source in paginatedSources" :key="source.source_id">
-                            {{ source.name }} ({{ source.seasons }} seasons)
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <h1>{{ series.name }}</h1>
+            <img :src="`https://image.tmdb.org/t/p/w500${series.poster_path}`" alt="Poster Image" />
+            <p>{{ series.overview }}</p>
+            <p>First Air Date: {{ series.first_air_date }}</p>
+            <p>Last Air Date: {{ series.last_air_date }}</p>
+            <p>Number of Seasons: {{ series.number_of_seasons }}</p>
+            <p>Number of Episodes: {{ series.number_of_episodes }}</p>
+            <p>Rating: {{ series.vote_average }}</p>
+            <p>Genres: {{ series.genres.map(genre => genre.name).join(', ') }}</p>
+            <p>Production Companies: {{ series.production_companies.map(company => company.name).join(', ') }}</p>
+            <p>Production Countries: {{ series.production_countries.map(country => country.name).join(', ') }}</p>
+            <p>Spoken Languages: {{ series.spoken_languages.map(language => language.english_name).join(', ') }}</p>
+            <p>Homepage: <a :href="series.homepage" target="_blank">{{ series.homepage }}</a></p>
+            <p>Status: {{ series.status }}</p>
+            <p>Type: {{ series.type }}</p>
+            <p>Created By: {{ series.created_by.map(creator => creator.name).join(', ') }}</p>
+            <p>Networks: {{ series.networks.map(network => network.name).join(', ') }}</p>
+            <p>Episode Run Time: {{ series.episode_run_time.join(', ') }} minutes</p>
+            <p>In Production: {{ series.in_production ? 'Yes' : 'No' }}</p>
+            <p>Tagline: {{ series.tagline }}</p>
+            <p>Popularity: {{ series.popularity }}</p>
+            <p>Last Episode to Air: {{ series.last_episode_to_air.name }} (Season {{ series.last_episode_to_air.season_number }}, Episode {{ series.last_episode_to_air.episode_number }})</p>
+            <p>Next Episode to Air: {{ series.next_episode_to_air.name }} (Season {{ series.next_episode_to_air.season_number }}, Episode {{ series.next_episode_to_air.episode_number }})</p>
+            <p>Seasons:</p>
+            <ul>
+                <li v-for="season in series.seasons" :key="season.id">
+                    {{ season.name }} - {{ season.episode_count }} episodes (Air Date: {{ season.air_date }})
+                </li>
+            </ul>
         </div>
-        <p v-else>No series found.</p>
+        <div v-else>
+            <p>Loading...</p>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import NavBar from "@/components/NavBar.vue";
+import NavBar from '@/components/NavBar.vue';
 
 export default {
     name: 'DetailSeries',
@@ -43,75 +48,26 @@ export default {
     },
     data() {
         return {
-            series: null,
-            currentPage: 1,
-            itemsPerPage: 3
+            series: null
         };
     },
-    computed: {
-        paginatedSources() {
-            if (!this.series || !this.series.sources) return [];
-            const uniqueSources = [];
-            const uniqueNames = new Set();
-            for (const source of this.series.sources) {
-                if (uniqueNames.size < 3 && !uniqueNames.has(source.name)) {
-                    uniqueSources.push(source);
-                    uniqueNames.add(source.name);
-                }
-            }
-            const start = (this.currentPage - 1) * this.itemsPerPage;
-            const end = start + this.itemsPerPage;
-            return uniqueSources.slice(start, end);
-        },
-        totalPages() {
-            if (!this.series || !this.series.sources) return 1;
-            const uniqueNames = new Set(this.series.sources.map(source => source.name));
-            return Math.ceil(uniqueNames.size / this.itemsPerPage);
-        }
-    },
     mounted() {
-        this.fetchSeriesDetails();
+        this.fetchSeriesDetail();
     },
     methods: {
-        async fetchSeriesDetails() {
-            const titleId = '3108093'; // Replace with the actual title ID
+        async fetchSeriesDetail() {
+            const seriesId = this.$route.params.id;
             try {
-                const response = await axios.get(`https://api.watchmode.com/v1/title/${titleId}/details/`, {
+                const response = await axios.get(`https://api.themoviedb.org/3/tv/${seriesId}`, {
                     params: {
-                        apiKey: 'ZL1gWp7kjjVLORk0vBMFak648LnwiTofK4LbN2Ue',
-                        append_to_response: 'sources,seasons,episodes,cast-crew'
+                        api_key: '27669d5eff252733bade61094dcd4d38'
                     }
                 });
                 this.series = response.data;
             } catch (error) {
                 console.error('Error fetching series details:', error);
-                this.series = null;
             }
-        },
+        }
     }
 };
 </script>
-
-<style scoped>
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-img {
-    width: 100px;
-    height: auto;
-    margin-right: 1rem;
-}
-
-div {
-    display: flex;
-    flex-direction: column;
-}
-</style>
