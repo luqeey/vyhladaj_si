@@ -4,7 +4,7 @@
         <div
             v-if="movie"
             class="absolute inset-0 z-0 bg-cover bg-center blur-xl opacity-25"
-            :style="{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.poster_path})` }"
+            :style="{ backgroundImage: url(`https://image.tmdb.org/t/p/original${movie.poster_path}`) }"
         ></div>
 
         <!-- Main Content -->
@@ -29,11 +29,13 @@
                     <div class="text-sm text-gray-400 space-y-1">
                         <p><strong>Genres:</strong> {{ movie.genres.map(genre => genre.name).join(', ') }}</p>
                         <p><strong>Production:</strong> {{ movie.production_companies.map(company => company.name).join(', ') }}</p>
-                        <p v-if="movie.budget > 0"><strong>Budget:</strong> ${{ movie.budget.toLocaleString() }}</p>
-                        <p v-if="movie.revenue > 0"><strong>Revenue:</strong> ${{ movie.revenue.toLocaleString() }}</p>
+                        <p><strong>Budget:</strong> ${{ movie.budget.toLocaleString() }}</p>
+                        <p><strong>Revenue:</strong> ${{ movie.revenue.toLocaleString() }}</p>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
         <!-- Loading Spinner -->
@@ -55,23 +57,19 @@ export default {
     },
     mounted() {
         this.fetchMovieDetail();
-        document.body.style.overflow = 'hidden';  // Prevent scrolling
-    },
-    beforeDestroy() {
-        document.body.style.overflow = '';  // Revert the scroll behavior when the component is destroyed
     },
     methods: {
         async fetchMovieDetail() {
             const movieId = this.$route.params.id;
             try {
-                const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-                    params: { api_key: '27669d5eff252733bade61094dcd4d38' },
-                });
-                this.movie = response.data;
-            } catch (error) {
-                console.error('Error fetching movie details:', error);
-            }
-        },
+                const response = await axios.get("https://api.themoviedb.org/3/movie/${movieId}", {
+                params: { api_key: '27669d5eff252733bade61094dcd4d38' },
+            });
+            this.movie = response.data;
+        } catch (error) {
+            console.error('Error fetching movie details:', error);
+        }
     },
+},
 };
 </script>
