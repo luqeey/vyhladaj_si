@@ -65,27 +65,34 @@ export default {
 <style scoped>
 .background-color {
     background-color: rgba(28, 28, 28, 0.6);
-    min-height: 100vh;
+    position: absolute;
     width: 100%;
+    min-height: 100%;
 }
 
 .background {
-    overflow: hidden;
-    position: absolute;
-    left: 80px;
-    width: calc(100% - 160px);
+    position: relative;
     z-index: 10;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: auto;
+}
+
+html, body {
+    background: rgba(28, 28, 28, 0.6);
+    min-height: 100vh;
 }
 
 .grid-wrapper {
     display: grid;
     gap: 1rem;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    max-width: calc(100% - 160px);
+    grid-template-columns: repeat(7, 1fr);
+    justify-content: center;
 }
 
 .poster-image {
@@ -108,9 +115,39 @@ export default {
     background-color: #333;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .grid-wrapper {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 860px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 680px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 320px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 </style>
