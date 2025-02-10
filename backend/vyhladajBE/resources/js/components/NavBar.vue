@@ -2,7 +2,7 @@
 <template>
   <div class="bg-[#121212] relative navbar">
     <!-- Navbar -->
-    <div class="flex items-center h-[70px] justify-between px-8 lg:px-16 relative z-50">
+    <div class="flex items-center h-[70px] justify-between w-full  mx-auto px-[80px]">
       <router-link to="/" class="text-[#F8E7F8]">
         <img class="w-52" src="@/components/nachoverse-logo.png" alt="Logo">
       </router-link>
@@ -113,6 +113,23 @@ button, .mobile-menu {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Additional styling for navbar */
+.navbar {
+  width: 100%;
+}
+
+.navbar > .flex {
+  padding-left: 80px; /* Padding from left */
+  padding-right: 80px; /* Padding from right */
+}
+
+@media (width: 100%) {
+  .navbar > .flex {
+    padding-left: 80px; /* Ensure 80px padding on smaller screens */
+    padding-right: 80px; /* Ensure 80px padding on smaller screens */
   }
 }
 </style>
