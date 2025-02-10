@@ -1,5 +1,7 @@
 <template>
     <div class="min-h-screen bg-[#121212] flex flex-col items-center">
+        <Loader :visible="isLoading" />
+
         <div
             :class="{
         'mt-32': !results.length,
@@ -22,7 +24,8 @@
                 </button>
             </div>
         </div>
-        <div v-if="results && results.length" class="mt-6 w-full max-w-3xl mb-16"> ">
+
+        <div v-if="results && results.length" class="mt-6 w-full max-w-3xl mb-16">
             <ul class="flex flex-col items-center space-y-6">
                 <li
                     v-for="result in results"
@@ -44,30 +47,40 @@
 
 <script>
 import axios from "axios";
+import Loader from "@/components/Loader.vue"; // Adjust the path as needed
 
 export default {
     name: "CinemasPage",
+    components: { Loader },
     data() {
         return {
             searchQuery: "",
-            results: []
+            results: [],
+            isLoading: false,
         };
     },
     methods: {
         async searchCinemas() {
             if (this.searchQuery.length > 2) {
+                this.isLoading = true;
+                this.results = []; // Clear previous results
+
                 try {
                     const response = await axios.get("/api/search-cinemas", {
-                        params: {
-                            location: this.searchQuery
-                        }
+                        params: { location: this.searchQuery },
                     });
-                    this.results = response.data.local_results?.places || [];
+
+                    // Simulate a longer loading time
+                    setTimeout(() => {
+                        this.results = response.data.local_results?.places || [];
+                        this.isLoading = false;
+                    }, 2000);
                 } catch (error) {
                     console.error(error);
+                    this.isLoading = false;
                 }
             }
-        }
-    }
+        },
+    },
 };
 </script>
