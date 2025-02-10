@@ -23,12 +23,15 @@
 
 <script>
 import axios from 'axios';
+import avengersSound from '../../assets/Avengers_Sound_Effect.mp3'; // Correct import from the `src/assets/` folder
+import duneSound from '../../assets/Dune_Vocals.mp3'; // New sound for Dune Easter egg
 
 export default {
     name: 'ResultPage',
     data() {
         return {
-            results: []
+            results: [],
+            easterEggPlayed: false
         };
     },
     mounted() {
@@ -56,9 +59,28 @@ export default {
                     }
                 });
                 this.results = response.data.results;
+
+                // Easter Egg 1: Play sound if the query is "Avengers"
+                if (query.toLowerCase() === 'avengers' && !this.easterEggPlayed) {
+                    this.playEasterEggSound(avengersSound);
+                    this.easterEggPlayed = true;
+                }
+
+                // Easter Egg 2: Play sound if the query is "Dune"
+                if (query.toLowerCase() === 'dune' && !this.easterEggPlayed) {
+                    this.playEasterEggSound(duneSound);
+                    this.easterEggPlayed = true;
+                }
+
             } catch (error) {
                 console.error('Error fetching search results:', error);
             }
+        },
+        playEasterEggSound(sound) {
+            const audio = new Audio(sound); // Pass the correct sound
+            audio.play().catch(error => {
+                console.error('Error playing sound:', error);
+            });
         },
         handleImageError(event) {
             event.target.style.display = 'none';
