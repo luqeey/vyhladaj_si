@@ -2,7 +2,7 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div v-for="release in releases" :key="release.id" @click="goToMovieDetail(release.id)">
+                <div v-for="release in releases" :key="release.id" @click="goToMovieDetail(release.id)" class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
                     <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
                 </div>
             </div>
@@ -81,7 +81,6 @@ export default {
     margin: auto;
 }
 
-
 html, body {
     background: rgba(28, 28, 28, 0.6);
     min-height: 100vh;
@@ -91,8 +90,8 @@ html, body {
     display: grid;
     gap: 1rem;
     width: 100%;
-    max-width: calc(100% - 160px); /* Only the content area gets this max width */
-    grid-template-columns: repeat(7, 1fr); /* Default: 7 columns */
+    max-width: calc(100% - 160px);
+    grid-template-columns: repeat(7, 1fr);
     justify-content: center;
 }
 
@@ -118,37 +117,37 @@ html, body {
 
 @media (max-width: 1200px) {
     .grid-wrapper {
-        grid-template-columns: repeat(6, 1fr); /* 6 columns */
+        grid-template-columns: repeat(6, 1fr);
     }
 }
 
 @media (max-width: 1024px) {
     .grid-wrapper {
-        grid-template-columns: repeat(5, 1fr); /* 5 columns */
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
 @media (max-width: 860px) {
     .grid-wrapper {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 680px) {
     .grid-wrapper {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 500px) {
     .grid-wrapper {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 320px) {
     .grid-wrapper {
-        grid-template-columns: repeat(1, 1fr); /* 1 column */
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 </style>
