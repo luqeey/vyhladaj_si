@@ -5,6 +5,7 @@ import SeriesPage from "@/components/series/SeriesPage.vue";
 import CinemasPage from "@/components/CinemasPage.vue";
 import DetailSeries from "@/components/series/DetailSeries.vue";
 import DetailMovie from "@/components/movies/DetailMovie.vue";
+import ResultPage from "@/components/ResultPage.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
             path: '/detail-tv-series/:id',
             name: 'detail series',
             component: DetailSeries,
+        },
+        {
+            path: '/results',
+            name: 'result',
+            component: ResultPage,
         },
     ],
 })

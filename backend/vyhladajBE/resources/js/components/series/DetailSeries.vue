@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-[#121212]">
+    <div class="h-screen bg-[#121212] text-white relative">
         <div v-if="series">
             <h1>{{ series.name }}</h1>
             <img :src="`https://image.tmdb.org/t/p/w500${series.poster_path}`" alt="Poster Image" />
@@ -23,7 +23,7 @@
             <p>Tagline: {{ series.tagline }}</p>
             <p>Popularity: {{ series.popularity }}</p>
             <p>Last Episode to Air: {{ series.last_episode_to_air.name }} (Season {{ series.last_episode_to_air.season_number }}, Episode {{ series.last_episode_to_air.episode_number }})</p>
-            <p>Next Episode to Air: {{ series.next_episode_to_air.name }} (Season {{ series.next_episode_to_air.season_number }}, Episode {{ series.next_episode_to_air.episode_number }})</p>
+            <p>Next Episode to Air: {{ series.next_episode_to_air ? series.next_episode_to_air.name : 'N/A' }}</p>
             <p>Seasons:</p>
             <ul>
                 <li v-for="season in series.seasons" :key="season.id">
@@ -39,13 +39,9 @@
 
 <script>
 import axios from 'axios';
-import NavBar from '@/components/NavBar.vue';
 
 export default {
     name: 'DetailSeries',
-    components: {
-        NavBar
-    },
     data() {
         return {
             series: null

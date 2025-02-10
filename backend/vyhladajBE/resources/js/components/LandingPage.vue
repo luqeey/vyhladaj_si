@@ -1,54 +1,55 @@
 <template>
-  <section>
-    <div class="relative">
-      <div class="flex items-center">
-        <input
-          type="search"
-          placeholder="Search for movie or series..."
-          class="bg-[#1C1C1C]/60 backdrop-blur-md text-white placeholder-gray-400 rounded-full border border-gray-600 z-30 focus:outline-none pl-4 pr-4 py-3 w-full sm:w-[24rem] md:w-[28rem] lg:w-[32rem]"
-        />
-      </div>
-    </div>
+    <section>
+        <div class="relative">
+            <div class="flex items-center">
+                <input
+                    type="search"
+                    placeholder="Search for movie or series..."
+                    class="bg-[#1C1C1C]/60 backdrop-blur-md text-white placeholder-gray-400 rounded-full border border-gray-600 z-30 focus:outline-none pl-4 pr-4 py-3 w-full sm:w-[24rem] md:w-[28rem] lg:w-[32rem]"
+                    @keyup.enter="search"
+                    v-model="searchQuery"
+                />
+            </div>
+        </div>
 
-    <!-- Dark Fade Effect -->
-    <div class="fade-effect"></div>
-    <div class="background">
-      <div class="grid-wrapper">
-        <!-- Each column of images -->
-        <div
-  v-for="(column, i) in imageColumns"
-  :key="i"
-  class="scroll-column"
-  :style="{
-    animationDuration: '90s', /* Slow speed: 90 seconds per scroll cycle */
-    animationDirection: i % 2 === 0 ? 'normal' : 'reverse', /* One scrolls up, the other down */
-  }"
->
-  <div class="image-list">
-    <!-- First Set of Images -->
-      <img
-          v-for="(image, j) in column"
-          :key="`first-${i}-${j}`"
-          :src="image.poster_url"
-          alt="Poster Image"
-          class="w-full h-auto rounded-sm object-cover"
-          @error="handleImageError"
-      />
+        <!-- Dark Fade Effect -->
+        <div class="fade-effect"></div>
+        <div class="background">
+            <div class="grid-wrapper">
+                <!-- Each column of images -->
+                <div
+                    v-for="(column, i) in imageColumns"
+                    :key="i"
+                    class="scroll-column"
+                    :style="{
+                        animationDuration: '90s', /* Slow speed: 90 seconds per scroll cycle */
+                        animationDirection: i % 2 === 0 ? 'normal' : 'reverse', /* One scrolls up, the other down */
+                    }"
+                >
+                    <div class="image-list">
+                        <!-- First Set of Images -->
+                        <img
+                            v-for="(image, j) in column"
+                            :key="`first-${i}-${j}`"
+                            :src="image.poster_url"
+                            alt="Poster Image"
+                            class="w-full h-auto rounded-sm object-cover"
+                            @error="handleImageError"
+                        />
 
-      <img
-          v-for="(image, j) in column"
-          :key="`second-${i}-${j}`"
-          :src="image.poster_url"
-          alt="Poster Image"
-          class="w-full h-auto rounded-sm object-cover"
-          @error="handleImageError"
-      />
-  </div>
-</div>
-
-      </div>
-    </div>
-  </section>
+                        <img
+                            v-for="(image, j) in column"
+                            :key="`second-${i}-${j}`"
+                            :src="image.poster_url"
+                            alt="Poster Image"
+                            class="w-full h-auto rounded-sm object-cover"
+                            @error="handleImageError"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -58,7 +59,8 @@ export default {
     name: "LandingPage",
     data() {
         return {
-            imageColumns: Array.from({ length: 8 }, () => []) // Ensure 8 columns
+            imageColumns: Array.from({ length: 8 }, () => []), // Ensure 8 columns
+            searchQuery: ''
         };
     },
     mounted() {
@@ -90,12 +92,16 @@ export default {
             }
         },
         handleImageError(event) {
-            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
+            event.target.style.display = 'none';
+        },
+        search() {
+            if (this.searchQuery.trim()) {
+                this.$router.push({ name: 'result', query: { q: this.searchQuery } });
+            }
         }
     }
 };
 </script>
-
 
 <style scoped>
 section {
