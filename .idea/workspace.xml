@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/assets/Avengers_Sound_Effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/assets/Dune_Vocals.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +54,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "luqey",
-    "last_opened_file_path": "/Users/eliasko/Documents/GitHub/vyhladaj_si/backend/vyhladajBE/resources/js/components",
+    "git-widget-placeholder": "maxim",
+    "last_opened_file_path": "/Users/maximfruhwald/Documents/GitHub/vyhladaj_si/backend/vyhladajBE/resources/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,6 +69,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/vyhladajBE/resources/assets" />
       <recent name="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components" />
     </key>
   </component>
