@@ -143,7 +143,7 @@ html, body {
     gap: 1rem;
     width: 100%;
     max-width: calc(100% - 160px);
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(7, 1fr);
     justify-content: center;
 }
 
