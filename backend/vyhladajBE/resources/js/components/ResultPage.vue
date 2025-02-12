@@ -2,15 +2,8 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div v-for="result in filteredResults" :key="result.id" @click="goToDetail(result)" class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                    <img v-if="result.poster_path" :src="`https://image.tmdb.org/t/p/w500${result.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError" />
-                    <div v-if="result.known_for && result.known_for.length">
-                        <ul>
-                            <li v-for="known in result.known_for" :key="known.id" class="mt-2">
-                                <img v-if="known.poster_path" :src="`https://image.tmdb.org/t/p/w500${known.poster_path}`" alt="Known For Image" class="poster-image" @click="goToDetail(known)" @error="handleImageError" />
-                            </li>
-                        </ul>
-                    </div>
+                <div v-for="result in filteredResults" :key="result.id" @click="goToDetail(result)" class="poster-container transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
+                    <img v-if="result.poster_path" :src="getProxiedImageUrl(result.poster_path)" alt="Poster Image" class="poster-image" @error="handleImageError"/>
                 </div>
             </div>
         </div>
@@ -57,6 +50,17 @@ export default {
                     }
                 });
                 this.results = response.data.results;
+
+                if (query.toLowerCase() === 'avengers' && !this.easterEggPlayed) {
+                    this.playEasterEggSound(avengersSound);
+                    this.easterEggPlayed = true;
+                }
+
+                if (query.toLowerCase() === 'dune' && !this.easterEggPlayed) {
+                    this.playEasterEggSound(duneSound);
+                    this.easterEggPlayed = true;
+                }
+
             } catch (error) {
                 console.error('Error fetching search results:', error);
             }
@@ -68,7 +72,7 @@ export default {
             this.easterEggPlayed = true;
         },
         handleImageError(event) {
-            event.target.style.display = 'none';
+            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
         },
         goToDetail(result) {
             if (result.media_type === 'movie') {
@@ -86,6 +90,10 @@ export default {
             if (sound) {
                 window.addEventListener('click', () => this.playEasterEggSound(sound), { once: true });
             }
+        },
+        getProxiedImageUrl(posterPath) {
+            const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+            return posterPath ? `${imageBaseUrl}${posterPath}` : 'https://via.placeholder.com/200x300?text=No+Image';
         },
         getEasterEggSound(query) {
             query = query.toLowerCase();
@@ -135,13 +143,35 @@ html, body {
     gap: 1rem;
     width: 100%;
     max-width: calc(100% - 160px);
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     justify-content: center;
+}
+
+.poster-container {
+    transition: transform 0.3s;
+}
+
+.poster-container:hover {
+    transform: translateY(-0.5rem);
 }
 
 .poster-image {
     width: 100%;
     height: auto;
     cursor: pointer;
+}
+
+.load-more-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #1C1C1C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.load-more-button:hover {
+    background-color: #333;
 }
 </style>

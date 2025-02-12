@@ -2,61 +2,77 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div v-for="release in releases" :key="release.id" @click="goToSeriesDetail(release.id)" class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                    <img :src="`https://image.tmdb.org/t/p/w500${release.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
+                <div
+                    v-for="release in store.releases"
+                    :key="release.id"
+                    @click="goToSeriesDetail(release.id)"
+                    class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
+                    <img
+                        :src="getProxiedImageUrl(release.poster_path)"
+                        alt="Poster Image"
+                        class="poster-image"
+                        @error="handleImageError"
+                    />
                 </div>
             </div>
-            <button @click="loadMore" v-if="currentPage < totalPages" class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">Load More</button>
+            <button
+                @click="loadMore"
+                v-if="store.currentPage < store.totalPages"
+                class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">
+                Load More
+            </button>
         </div>
     </div>
 </template>
 
 <script>
+import { useMovieStore } from '@/store/store.js';
 import axios from 'axios';
-import NavBar from '@/components/NavBar.vue';
 
 export default {
-    name: 'SeriesPage',
-    components: {
-        NavBar
-    },
-    data() {
-        return {
-            releases: [],
-            currentPage: 1,
-            totalPages: 1,
-        };
-    },
-    mounted() {
-        this.fetchReleases();
-    },
-    methods: {
-        async fetchReleases() {
+    setup() {
+        const store = useMovieStore();
+
+        async function fetchReleases() {
             try {
                 const response = await axios.get('https://api.themoviedb.org/3/tv/popular', {
-                    params: {
-                        api_key: '27669d5eff252733bade61094dcd4d38',
-                        page: this.currentPage
-                    }
+                    params: { api_key: '27669d5eff252733bade61094dcd4d38', page: store.currentPage }
                 });
-                const newReleases = response.data.results;
-                this.releases = [...this.releases, ...newReleases];
-                this.totalPages = response.data.total_pages;
+                store.addReleases(response.data.results);
+                store.setTotalPages(response.data.total_pages);
             } catch (error) {
                 console.error('Error fetching releases:', error);
             }
-        },
+        }
+
+        return { store, fetchReleases };
+    },
+    mounted() {
+        if (this.store.releases.length === 0) {
+            this.fetchReleases();
+        } else {
+            this.$nextTick(() => {
+                window.scrollTo(0, this.store.scrollPosition);
+            });
+        }
+    },
+    methods: {
         async loadMore() {
-            if (this.currentPage < this.totalPages) {
-                this.currentPage++;
+            if (this.store.currentPage < this.store.totalPages) {
+                this.store.setCurrentPage(this.store.currentPage + 1);
                 await this.fetchReleases();
             }
         },
+        goToSeriesDetail(seriesId) {
+            this.store.setScrollPosition(window.scrollY);
+            this.$router.push({ name: 'detail series', params: { id: seriesId } });
+        },
+        getProxiedImageUrl(posterPath) {
+            const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+            return posterPath ? `${imageBaseUrl}${posterPath}` : 'fallback-image.jpg';
+        },
         handleImageError(event) {
             event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
-        },
-        goToSeriesDetail(seriesId) {
-            this.$router.push({ name: 'detail series', params: { id: seriesId } });
         }
     }
 };
