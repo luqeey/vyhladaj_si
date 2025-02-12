@@ -89,10 +89,12 @@ html, body {
 .grid-wrapper {
     display: grid;
     gap: 1rem;
+    height: 100%;
     width: 100%;
-    max-width: calc(100% - 160px);
-    grid-template-columns: repeat(7, 1fr);
-    justify-content: center;
+    overflow: hidden;
+    grid-template-columns: repeat(8, 1fr);
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .poster-image {
@@ -148,6 +150,13 @@ html, body {
 @media (max-width: 320px) {
     .grid-wrapper {
         grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 30rem) {
+    .grid-wrapper {
+        padding-left: 80px;
+        padding-right: 80px;
     }
 }
 </style>
