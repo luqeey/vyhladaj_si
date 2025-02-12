@@ -4,7 +4,7 @@
             <div class="flex items-center">
                 <input
                     type="search"
-                    placeholder="Search for movie or series..."
+                    placeholder="Try search Dune, Avengers of Modern Family..."
                     class="bg-[#1C1C1C]/60 backdrop-blur-md text-white placeholder-gray-400 rounded-full border border-gray-600 z-30 focus:outline-none pl-4 pr-4 py-3 w-full sm:w-[24rem] md:w-[28rem] lg:w-[32rem]"
                     @keyup.enter="search"
                     v-model="searchQuery"

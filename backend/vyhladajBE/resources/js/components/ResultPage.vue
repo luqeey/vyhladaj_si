@@ -3,11 +3,11 @@
         <div class="background">
             <div class="grid-wrapper">
                 <div v-for="result in filteredResults" :key="result.id" @click="goToDetail(result)" class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                    <img v-if="result.poster_path" :src="`https://image.tmdb.org/t/p/w500${result.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError"/>
+                    <img v-if="result.poster_path" :src="`https://image.tmdb.org/t/p/w500${result.poster_path}`" alt="Poster Image" class="poster-image" @error="handleImageError" />
                     <div v-if="result.known_for && result.known_for.length">
                         <ul>
                             <li v-for="known in result.known_for" :key="known.id" class="mt-2">
-                                <img v-if="known.poster_path" :src="`https://image.tmdb.org/t/p/w500${known.poster_path}`" alt="Known For Image" class="poster-image" @click="goToDetail(known)" @error="handleImageError"/>
+                                <img v-if="known.poster_path" :src="`https://image.tmdb.org/t/p/w500${known.poster_path}`" alt="Known For Image" class="poster-image" @click="goToDetail(known)" @error="handleImageError" />
                             </li>
                         </ul>
                     </div>
@@ -19,15 +19,17 @@
 
 <script>
 import axios from 'axios';
-import avengersSound from '../../assets/Avengers_Sound_Effect.mp3'; // Correct import from the `src/assets/` folder
-import duneSound from '../../assets/Dune_Vocals.mp3'; // New sound for Dune Easter egg
+import avengersSound from '../../assets/Avengers_Sound_Effect.mp3';
+import duneSound from '../../assets/Dune_Vocals.mp3';
+import modernFamilySound from '../../assets/modern_family.mp3';
 
 export default {
     name: 'ResultPage',
     data() {
         return {
             results: [],
-            easterEggPlayed: false
+            easterEggPlayed: false,
+            audio: null,
         };
     },
     mounted() {
@@ -55,39 +57,51 @@ export default {
                     }
                 });
                 this.results = response.data.results;
-
-                // Easter Egg 1: Play sound if the query is "Avengers"
-                if (query.toLowerCase() === 'avengers' && !this.easterEggPlayed) {
-                    this.playEasterEggSound(avengersSound);
-                    this.easterEggPlayed = true;
-                }
-
-                // Easter Egg 2: Play sound if the query is "Dune"
-                if (query.toLowerCase() === 'dune' && !this.easterEggPlayed) {
-                    this.playEasterEggSound(duneSound);
-                    this.easterEggPlayed = true;
-                }
-
             } catch (error) {
                 console.error('Error fetching search results:', error);
             }
         },
         playEasterEggSound(sound) {
-            const audio = new Audio(sound); // Pass the correct sound
-            audio.play().catch(error => {
-                console.error('Error playing sound:', error);
-            });
+            if (this.easterEggPlayed) return;
+            this.audio = new Audio(sound);
+            this.audio.play().catch(error => console.error('Error playing sound:', error));
+            this.easterEggPlayed = true;
         },
         handleImageError(event) {
             event.target.style.display = 'none';
         },
         goToDetail(result) {
             if (result.media_type === 'movie') {
-                this.$router.push({ name: 'detail movie', params: { id: result.id } });
+                this.$router.push({ name: 'detail movie', params: { id: result.id } }).then(() => {
+                    this.setupEasterEggListener(result.title || result.name);
+                });
             } else if (result.media_type === 'tv') {
-                this.$router.push({ name: 'detail series', params: { id: result.id } });
+                this.$router.push({ name: 'detail series', params: { id: result.id } }).then(() => {
+                    this.setupEasterEggListener(result.title || result.name);
+                });
             }
+        },
+        setupEasterEggListener(query) {
+            const sound = this.getEasterEggSound(query);
+            if (sound) {
+                window.addEventListener('click', () => this.playEasterEggSound(sound), { once: true });
+            }
+        },
+        getEasterEggSound(query) {
+            query = query.toLowerCase();
+            if (query.includes('avengers')) return avengersSound;
+            if (query.includes('dune')) return duneSound;
+            if (query.includes('modern family')) return modernFamilySound;
+            return null;
         }
+    },
+    beforeRouteLeave(to, from, next) {
+        // Pause the audio if the route changes
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.currentTime = 0; // Reset to the start
+        }
+        next();
     }
 };
 </script>
@@ -129,55 +143,5 @@ html, body {
     width: 100%;
     height: auto;
     cursor: pointer;
-}
-
-.load-more-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #1C1C1C;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.load-more-button:hover {
-    background-color: #333;
-}
-
-@media (max-width: 1200px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(6, 1fr);
-    }
-}
-
-@media (max-width: 1024px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-@media (max-width: 860px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 680px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 500px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 320px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(1, 1fr);
-    }
 }
 </style>
