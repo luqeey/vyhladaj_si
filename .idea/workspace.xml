@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/store/store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/MoviePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/movies/MoviePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/SeriesPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/SeriesPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +112,7 @@
       <workItem from="1738739254797" duration="3193000" />
       <workItem from="1739171469932" duration="4923000" />
       <workItem from="1739177116303" duration="636000" />
-      <workItem from="1739344772536" duration="3511000" />
+      <workItem from="1739344772536" duration="6550000" />
     </task>
     <servers />
   </component>
