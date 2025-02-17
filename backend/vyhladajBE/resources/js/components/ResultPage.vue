@@ -104,10 +104,9 @@ export default {
         }
     },
     beforeRouteLeave(to, from, next) {
-        // Pause the audio if the route changes
         if (this.audio) {
             this.audio.pause();
-            this.audio.currentTime = 0; // Reset to the start
+            this.audio.currentTime = 0;
         }
         next();
     }
@@ -141,18 +140,12 @@ html, body {
 .grid-wrapper {
     display: grid;
     gap: 1rem;
+    height: 100%;
     width: 100%;
-    max-width: calc(100% - 160px);
-    grid-template-columns: repeat(7, 1fr);
-    justify-content: center;
-}
-
-.poster-container {
-    transition: transform 0.3s;
-}
-
-.poster-container:hover {
-    transform: translateY(-0.5rem);
+    overflow: hidden;
+    grid-template-columns: repeat(8, 1fr);
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .poster-image {
@@ -161,17 +154,46 @@ html, body {
     cursor: pointer;
 }
 
-.load-more-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #1C1C1C;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+@media (max-width: 1200px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }
 
-.load-more-button:hover {
-    background-color: #333;
+@media (max-width: 1024px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 860px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 680px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 320px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 30rem) {
+    .grid-wrapper {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
 }
 </style>
