@@ -79,7 +79,6 @@ export default {
                 releases.forEach((release, index) => {
                     this.imageColumns[index % columns].push(release);
                 });
-
             } catch (error) {
                 console.error('Error fetching images:', error);
             }
