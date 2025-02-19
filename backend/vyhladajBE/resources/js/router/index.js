@@ -6,6 +6,9 @@ import CinemasPage from "@/components/CinemasPage.vue";
 import DetailSeries from "@/components/series/DetailSeries.vue";
 import DetailMovie from "@/components/movies/DetailMovie.vue";
 import ResultPage from "@/components/ResultPage.vue";
+import ProfilePage from "@/components/ProfilePage.vue";
+import RegisterPage from "@/components/RegisterPage.vue";
+import LoginPage from "@/components/LoginPage.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +47,21 @@ const router = createRouter({
             name: 'result',
             component: ResultPage,
         },
+        {
+            path: '/profile/:id',
+            name: 'profile',
+            component: ProfilePage
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterPage,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: LoginPage,
+        }
     ],
 })
 
