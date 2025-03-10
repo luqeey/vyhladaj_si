@@ -74,15 +74,37 @@ export default {
         handleImageError(event) {
             event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
         },
-        goToDetail(result) {
+        async goToDetail(result) {
             if (result.media_type === 'movie') {
                 this.$router.push({ name: 'detail movie', params: { id: result.id } }).then(() => {
                     this.setupEasterEggListener(result.title || result.name);
                 });
             } else if (result.media_type === 'tv') {
+                await this.fetchNetworkImages(result.id);
                 this.$router.push({ name: 'detail series', params: { id: result.id } }).then(() => {
                     this.setupEasterEggListener(result.title || result.name);
                 });
+            }
+        },
+        async fetchNetworkImages(seriesId) {
+            try {
+                const { data } = await axios.get(`https://api.themoviedb.org/3/tv/${seriesId}`, {
+                    params: { api_key: '27669d5eff252733bade61094dcd4d38' }
+                });
+                const networkPromises = data.networks.map(async (network) => {
+                    const { data } = await axios.get(`https://api.themoviedb.org/3/network/${network.id}/images`, {
+                        params: { api_key: '27669d5eff252733bade61094dcd4d38' }
+                    });
+                    return {
+                        id: network.id,
+                        name: network.name,
+                        logo: `https://image.tmdb.org/t/p/w500${data.logos[0].file_path}`
+                    };
+                });
+                const networks = await Promise.all(networkPromises);
+                this.$store.commit('setNetworks', networks);
+            } catch (error) {
+                console.error('Error fetching network images:', error);
             }
         },
         setupEasterEggListener(query) {
