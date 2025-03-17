@@ -2,21 +2,21 @@
     <div class="background-color">
         <div class="background">
             <div class="grid-wrapper">
-                <div 
-                    v-for="release in store.releases" 
-                    :key="release.id" 
-                    @click="goToSeriesDetail(release.id)" 
+                <div
+                    v-for="release in filteredReleases"
+                    :key="release.id"
+                    @click="goToSeriesDetail(release.id)"
                     class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                    <img 
-                        :src="getProxiedImageUrl(release.poster_path)" 
-                        alt="Poster Image" 
-                        class="poster-image" 
+                    <img
+                        :src="getProxiedImageUrl(release.poster_path)"
+                        alt="Poster Image"
+                        class="poster-image"
                         @error="handleImageError" />
                 </div>
             </div>
-            <button 
-                v-if="store.currentPage < store.totalPages" 
-                @click="loadMore" 
+            <button
+                v-if="store.currentPage < store.totalPages"
+                @click="loadMore"
                 class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">
                 Load More
             </button>
@@ -53,6 +53,11 @@ export default {
             this.$nextTick(() => window.scrollTo(0, this.store.scrollPosition));
         }
     },
+    computed: {
+        filteredReleases() {
+            return this.store.releases.filter(release => release.poster_path);
+        }
+    },
     methods: {
         async loadMore() {
             if (this.store.currentPage < this.store.totalPages) {
@@ -65,8 +70,8 @@ export default {
             this.$router.push({ name: 'detail series', params: { id: seriesId } });
         },
         getProxiedImageUrl(posterPath) {
-            return posterPath 
-                ? `https://image.tmdb.org/t/p/w500${posterPath}` 
+            return posterPath
+                ? `https://image.tmdb.org/t/p/w500${posterPath}`
                 : 'https://via.placeholder.com/200x300?text=No+Image';
         },
         handleImageError(event) {
@@ -98,7 +103,7 @@ export default {
     display: grid;
     gap: 1rem;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(8, 1fr);
     padding: 0 8px;
 }
 
@@ -106,6 +111,30 @@ export default {
     width: 100%;
     height: auto;
     cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .grid-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (min-width: 30rem) {
