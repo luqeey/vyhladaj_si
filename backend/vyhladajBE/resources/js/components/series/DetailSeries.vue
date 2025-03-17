@@ -14,7 +14,7 @@
                 <img
                     :src="`https://image.tmdb.org/t/p/w500${series.poster_path}`"
                     alt="Poster Image"
-                    class="w-56 lg:w-72 rounded-lg shadow-lg" 
+                    class="w-56 lg:w-72 rounded-lg shadow-lg"
                 />
 
                 <!-- Series Details -->
@@ -29,11 +29,16 @@
                     <div class="text-xs md:text-sm text-gray-400 space-y-1 pb-8">
                         <p><strong>Genres:</strong> {{ series.genres.map(g => g.name).join(', ') }}</p>
                         <p><strong>Production:</strong> {{ series.production_companies.map(c => c.name).join(', ') }}</p>
-                        <p><strong>Networks:</strong> {{ series.networks.map(n => n.name).join(', ') }}</p>
                         <p><strong>Status:</strong> {{ series.status }}</p>
                         <p><strong>Type:</strong> {{ series.type }}</p>
                         <p><strong>Popularity:</strong> {{ series.popularity }}</p>
                         <p><strong>Tagline:</strong> {{ series.tagline || 'N/A' }}</p>
+                        <p><strong>Where to watch:</strong></p>
+                        <div v-if="filteredNetworks.length" class="rectangle">
+                            <span v-for="network in filteredNetworks" :key="network.id" class="network-logo">
+                                <img :src="network.logo" :alt="network.name" class="w-full h-full object-contain"/>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,10 +57,18 @@ import axios from 'axios';
 export default {
     name: 'DetailSeries',
     data() {
-        return { series: null };
+        return {
+            series: null,
+            networks: []
+        };
     },
     mounted() {
         this.fetchSeriesDetail();
+    },
+    computed: {
+        filteredNetworks() {
+            return this.networks.filter(network => network.logo);
+        }
     },
     methods: {
         async fetchSeriesDetail() {
@@ -64,10 +77,56 @@ export default {
                     params: { api_key: '27669d5eff252733bade61094dcd4d38' }
                 });
                 this.series = data;
+                this.fetchNetworkImages();
             } catch (error) {
                 console.error('Error fetching series details:', error);
             }
-        }
+        },
+        async fetchNetworkImages() {
+            try {
+                const networkPromises = this.series.networks.map(async (network) => {
+                    const { data } = await axios.get(`https://api.themoviedb.org/3/network/${network.id}/images`, {
+                        params: { api_key: '27669d5eff252733bade61094dcd4d38' }
+                    });
+                    return {
+                        id: network.id,
+                        name: network.name,
+                        logo: data.logos.length ? `https://image.tmdb.org/t/p/w500${data.logos[0].file_path}` : null
+                    };
+                });
+                this.networks = await Promise.all(networkPromises);
+            } catch (error) {
+                console.error('Error fetching network images:', error);
+            }
+        },
     }
 };
 </script>
+
+<style scoped>
+.hidden-network-logos-container {
+    visibility: hidden; /* Hides the container while keeping its space */
+    position: absolute; /* Keeps it out of the normal flow */
+    left: -9999px; /* Moves it off-screen */
+}
+
+.network-logo {
+    display: flex;
+    align-items: center;
+    height: clamp(30px, 5vw, 50px);
+}
+
+.network-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Makes logos white */
+}
+</style>
+
+
+
+
+
+
+

@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/assets/modern_family.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LandingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ResultPage.vue" afterDir="false" />
-    </list>
+    <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,8 +86,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PS-243.23654.168" />
-        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.168" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.25659.45" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.25659.45" />
       </set>
     </attachedChunks>
   </component>
@@ -116,6 +111,7 @@
       <workItem from="1739171469932" duration="4923000" />
       <workItem from="1739177116303" duration="636000" />
       <workItem from="1739344772536" duration="2349000" />
+      <workItem from="1741593982323" duration="12000" />
     </task>
     <servers />
   </component>
