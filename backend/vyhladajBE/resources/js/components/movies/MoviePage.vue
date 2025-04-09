@@ -1,9 +1,9 @@
 <template>
     <div class="background-color">
         <div class="background">
-            <div class="grid-wrapper">
+            <div class="grid-wrapper" :key="route.fullPath">
                 <div
-                    v-for="release in store.releases"
+                    v-for="release in filteredReleases"
                     :key="release.id"
                     @click="goToMovieDetail(release.id)"
                     class="transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
@@ -11,13 +11,12 @@
                         :src="getProxiedImageUrl(release.poster_path)"
                         alt="Poster Image"
                         class="poster-image"
-                        @error="handleImageError"
-                    />
+                        @error="handleImageError" />
                 </div>
             </div>
             <button
-                @click="loadMore"
                 v-if="store.currentPage < store.totalPages"
+                @click="loadMore"
                 class="mt-4 mb-4 h-[45px] bg-gradient-to-r from-[#FACB3D] to-[#F1A601] text-white rounded-full px-4 py-2">
                 Load More
             </button>
@@ -25,56 +24,66 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { useMovieStore } from '@/store/store.js';
 import axios from 'axios';
 
-export default {
-    setup() {
-        const store = useMovieStore();
+const route = useRoute();
+const store = useMovieStore();
 
-        async function fetchReleases() {
-            try {
-                const response = await axios.get('https://api.themoviedb.org/3/movie/popular', {
-                    params: { api_key: '27669d5eff252733bade61094dcd4d38', page: store.currentPage }
-                });
-                store.addReleases(response.data.results);
-                store.setTotalPages(response.data.total_pages);
-            } catch (error) {
-                console.error('Error fetching releases:', error);
-            }
-        }
-
-        return { store, fetchReleases };
-    },
-    mounted() {
-        if (this.store.releases.length === 0) {
-            this.fetchReleases();
-        } else {
-            this.$nextTick(() => {
-                window.scrollTo(0, this.store.scrollPosition);
-            });
-        }
-    },
-    methods: {
-        async loadMore() {
-            if (this.store.currentPage < this.store.totalPages) {
-                this.store.setCurrentPage(this.store.currentPage + 1);
-                await this.fetchReleases();
-            }
-        },
-        goToMovieDetail(movieId) {
-            this.store.setScrollPosition(window.scrollY);
-            this.$router.push({ name: 'detail movie', params: { id: movieId } });
-        },
-        getProxiedImageUrl(posterPath) {
-            const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
-            return posterPath ? `${imageBaseUrl}${posterPath}` : 'fallback-image.jpg';
-        },
-        handleImageError(event) {
-            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
-        }
+const fetchReleases = async () => {
+    try {
+        const { data } = await axios.get('https://api.themoviedb.org/3/movie/popular', {
+            params: { api_key: '27669d5eff252733bade61094dcd4d38', page: store.currentPage }
+        });
+        store.addReleases(data.results);
+        store.setTotalPages(data.total_pages);
+    } catch (error) {
+        console.error('Error fetching releases:', error);
     }
+};
+
+const reloadComponent = () => {
+    console.log("Reloading component on route change");
+    fetchReleases();
+};
+
+onMounted(() => {
+    if (!store.releases.length) {
+        fetchReleases();
+    } else {
+        window.scrollTo(0, store.scrollPosition);
+    }
+});
+
+watch(() => route.fullPath, reloadComponent);
+
+const filteredReleases = computed(() => {
+    return store.releases.filter(release => release.poster_path);
+});
+
+const loadMore = async () => {
+    if (store.currentPage < store.totalPages) {
+        store.setCurrentPage(store.currentPage + 1);
+        await fetchReleases();
+    }
+};
+
+const goToMovieDetail = (movieId) => {
+    store.setScrollPosition(window.scrollY);
+    router.push({ name: 'detail movie', params: { id: movieId } });
+};
+
+const getProxiedImageUrl = (posterPath) => {
+    return posterPath
+        ? `https://image.tmdb.org/t/p/w500${posterPath}`
+        : 'https://via.placeholder.com/200x300?text=No+Image';
+};
+
+const handleImageError = (event) => {
+    event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
 };
 </script>
 
@@ -89,28 +98,19 @@ export default {
 .background {
     position: relative;
     z-index: 10;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     margin: auto;
-}
-
-html, body {
-    background: rgba(28, 28, 28, 0.6);
-    min-height: 100vh;
+    width: 100%;
 }
 
 .grid-wrapper {
     display: grid;
     gap: 1rem;
-    height: 100%;
     width: 100%;
-    overflow: hidden;
     grid-template-columns: repeat(8, 1fr);
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 0 8px;
 }
 
 .poster-image {
@@ -119,60 +119,33 @@ html, body {
     cursor: pointer;
 }
 
-.load-more-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #1C1C1C;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.load-more-button:hover {
-    background-color: #333;
-}
-
 @media (max-width: 1200px) {
     .grid-wrapper {
         grid-template-columns: repeat(6, 1fr);
     }
 }
 
-@media (max-width: 1024px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-@media (max-width: 860px) {
+@media (max-width: 992px) {
     .grid-wrapper {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media (max-width: 680px) {
-    .grid-wrapper {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .grid-wrapper {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 576px) {
     .grid-wrapper {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 30rem) {
     .grid-wrapper {
-        padding-left: 80px;
-        padding-right: 80px;
+        padding: 0 80px;
     }
 }
 </style>

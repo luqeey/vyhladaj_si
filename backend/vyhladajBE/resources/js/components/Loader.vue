@@ -24,13 +24,8 @@ export default {
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
-    border: 4px solid #282828;
     overflow: hidden;
     border-radius: 50%;
-    box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1),
-    10px 10px 10px rgba(0, 0, 0, 0.4),
-    inset -5px -5px 5px rgba(255, 255, 255, 0.2),
-    inset 10px 10px 10px rgba(0, 0, 0, 0.4);
 }
 
 .loader:before {
@@ -41,11 +36,8 @@ export default {
     right: 15px;
     bottom: 15px;
     z-index: 10;
-    background: #212121;
+    background: #121212;
     border-radius: 50%;
-    border: 2px solid #292929;
-    box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.2),
-    inset 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 .loader span {
