@@ -3,7 +3,7 @@
         <!-- Blurred Background -->
         <div
             v-if="series"
-            class="absolute inset-0 z-0 bg-cover bg-center blur-xl opacity-25"
+            class="absolute inset-0 z-0 bg-cover bg-center blur-xl opacity-30"
             :style="{ backgroundImage: `url(https://image.tmdb.org/t/p/original${series.poster_path})` }"
         ></div>
 
@@ -35,9 +35,11 @@
                         <p><strong>Tagline:</strong> {{ series.tagline || 'N/A' }}</p>
                         <p><strong>Where to watch:</strong></p>
                         <div v-if="filteredNetworks.length" class="rectangle">
-                            <span v-for="network in filteredNetworks" :key="network.id" class="network-logo">
-                                <img :src="network.logo" :alt="network.name" class="w-full h-full object-contain"/>
-                            </span>
+                            <div class="logo-container">
+                                <span v-for="network in filteredNetworks" :key="network.id" class="network-logo">
+                                    <img :src="network.logo" :alt="network.name" class="w-full h-full object-contain"/>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,29 +106,36 @@ export default {
 </script>
 
 <style scoped>
-.hidden-network-logos-container {
-    visibility: hidden; /* Hides the container while keeping its space */
-    position: absolute; /* Keeps it out of the normal flow */
-    left: -9999px; /* Moves it off-screen */
+.rectangle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    background-color: rgba(85, 76, 76, 0.58);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .network-logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: clamp(30px, 5vw, 50px);
+    width: auto;
 }
 
 .network-logo img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 100px;
+    max-height: 50px;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Makes logos white */
 }
 </style>
-
-
-
-
-
-
-
