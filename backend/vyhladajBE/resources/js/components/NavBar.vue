@@ -2,85 +2,92 @@
     <div class="bg-[#121212] relative navbar">
         <div class="flex items-center h-[70px] justify-between w-full mx-auto">
             <router-link to="/" class="text-[#F8E7F8]">
-                <img 
-                    class="w-52" 
-                    src="../../assets/nachoverse-logo.png" 
+                <img
+                    class="w-52"
+                    src="../../assets/nachoverse-logo.png"
                     alt="Logo"
                 />
             </router-link>
             <div class="hidden md:flex space-x-8">
-                <router-link 
-                    to="/movies" 
-                    class="nav-link" 
+                <router-link
+                    to="/movies"
+                    class="nav-link"
                     :class="{ 'active': $route.path === '/movies' }"
                 >
                     Movies
                 </router-link>
-                <router-link 
-                    to="/tv-series" 
-                    class="nav-link" 
+                <router-link
+                    to="/tv-series"
+                    class="nav-link"
                     :class="{ 'active': $route.path === '/tv-series' }"
                 >
                     Series
                 </router-link>
-                <router-link 
-                    to="/cinemas" 
-                    class="nav-link" 
+                <router-link
+                    to="/cinemas"
+                    class="nav-link"
                     :class="{ 'active': $route.path === '/cinemas' }"
                 >
                     Cinemas
                 </router-link>
+                <router-link
+                    to="/profile/:id"
+                    class="nav-link"
+                    :class="{ 'active': $route.path === '/profile/:id' }"
+                >
+                    Profile
+                </router-link>
             </div>
-            <button 
-                class="block md:hidden text-[#F8E7F8] relative z-50" 
+            <button
+                class="block md:hidden text-[#F8E7F8] relative z-50"
                 @click="toggleMenu"
             >
-                <svg 
-                    v-if="!menuOpen" 
-                    xmlns="http://www.w3.org/2000/svg" 
+                <svg
+                    v-if="!menuOpen"
+                    xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6 transition-transform transform duration-300 ease-in-out"
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                 >
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
-                <svg 
-                    v-if="menuOpen" 
-                    xmlns="http://www.w3.org/2000/svg" 
+                <svg
+                    v-if="menuOpen"
+                    xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6 transition-transform transform duration-300 ease-in-out"
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                 >
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <div 
+        <div
             class="md:hidden flex flex-col items-center bg-[#121212] text-[#F8E7F8] space-y-4 py-4 fixed inset-x-0 top-[70px] z-[999] shadow-lg"
             v-show="menuOpen"
         >
-            <router-link 
-                to="/movies" 
-                class="nav-link" 
-                :class="{ 'active': $route.path === '/movies' }" 
+            <router-link
+                to="/movies"
+                class="nav-link"
+                :class="{ 'active': $route.path === '/movies' }"
                 @click="closeMenu"
             >
                 Movies
             </router-link>
-            <router-link 
-                to="/tv-series" 
-                class="nav-link" 
-                :class="{ 'active': $route.path === '/tv-series' }" 
+            <router-link
+                to="/tv-series"
+                class="nav-link"
+                :class="{ 'active': $route.path === '/tv-series' }"
                 @click="closeMenu"
             >
                 Series
             </router-link>
-            <router-link 
-                to="/cinemas" 
-                class="nav-link" 
-                :class="{ 'active': $route.path === '/cinemas' }" 
+            <router-link
+                to="/cinemas"
+                class="nav-link"
+                :class="{ 'active': $route.path === '/cinemas' }"
                 @click="closeMenu"
             >
                 Cinemas

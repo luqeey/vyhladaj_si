@@ -16,6 +16,7 @@
 import axios from 'axios';
 
 export default {
+    name: 'ProfilePage',
     data() {
         return {
             name: '',
@@ -24,7 +25,13 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get(`/api/user/${this.$route.params.id}`);
+            const token = localStorage.getItem('auth_token');
+            const response = await axios.get("http://127.0.0.1:8000/api/user", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
             this.name = response.data.name;
             this.email = response.data.email;
         } catch (error) {

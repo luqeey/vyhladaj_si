@@ -32,6 +32,7 @@
 import axios from 'axios';
 
 export default {
+    name: 'RegisterPage',
     data() {
         return {
             form: {
@@ -43,25 +44,26 @@ export default {
             errors: []
         };
     },
+    mounted() {
+        document.title = 'Register';
+    },
     methods: {
-        async register() {
-            try {
-                const response = await axios.post('/register', this.form);
-                this.$router.push({
-                    name: 'profile',
-                    params: {
-                        id: response.data.user.id,
-                        email: response.data.user.email
+        register()
+        {
+            axios.post(`${this.baseUrl}/api/register`, this.form).then(
+                ({ data }) => {
+                    console.log(data);
+                    try
+                    {
+                        alert("Registration successful! Please check your email for verification.");
                     }
-                });
-                alert('You have successfully registered!');
-            } catch (error) {
-                if (error.response && error.response.data.errors) {
-                    this.errors = Object.values(error.response.data.errors).flat();
-                } else {
-                    console.error('An error occurred:', error);
+                    catch (error)
+                    {
+                        console.error("Error during registration:", error);
+                        this.errors.push("An error occurred during registration. Please try again.");
+                    }
                 }
-            }
+            )
         }
     }
 };

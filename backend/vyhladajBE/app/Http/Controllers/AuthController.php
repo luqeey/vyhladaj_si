@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -13,9 +13,9 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8',
@@ -26,29 +26,30 @@ class AuthController extends Controller
         $user->fill($data);
         $user->save();
 
-        return redirect()->route('profile.show', ['id' => $user->id])->with('success', 'You have successfully registered!');
+        return response()->json(['status' => true, 'message' => 'User created successfully!'], 201);
     }
 
-    public function login()
-    {
-        return view('auth.login');
-    }
 
     public function authenticate(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
 
-        if (auth()->attempt($data)) {
-            $request->session()->regenerate();
-            return redirect()->route('profile.show', ['id' => auth()->user()->id])->with('success', 'Login successfully');
+        if (Auth::attempt($data)) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+            ]);
         }
 
-        return redirect()->route('auth.login')->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
     }
 
     public function logout(Request $request)
@@ -57,22 +58,5 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-    }
-
-    public function update(Request $request, User $user)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'nullable|min:8|confirmed',
-        ]);
-
-        if ($data['password']) {
-            $data['password'] = bcrypt($data['password']);
-        } else {
-            unset($data['password']);
-        }
-
-        return redirect()->route('dashboard.index')->with('success', 'Profile updated successfully!');
     }
 }

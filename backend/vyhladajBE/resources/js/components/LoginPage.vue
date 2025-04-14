@@ -24,28 +24,41 @@
 import axios from 'axios';
 
 export default {
+    name: 'LoginPage',
     data() {
         return {
             form: {
                 email: '',
                 password: ''
             },
-            errors: []
+            errors: [],
+            baseUrl: localStorage.getItem('api_base_url') || "http://127.0.0.1:8000",
         };
     },
     methods: {
         async login() {
             try {
-                const response = await axios.post('/login', this.form);
-                this.$router.push({ name: 'update-profile', params: { id: response.data.user.id } });
-                alert('You have successfully logged in!');
+                const response = await axios.post(`${this.baseUrl}/api/login`, this.form); // Use dynamic base URL
+                const { token, user } = response.data;
+
+                localStorage.setItem('auth_token', token);
+
+                this.$router.push({
+                    name: 'ProfilePage',
+                    params: { id: user.id }
+                });
             } catch (error) {
-                if (error.response && error.response.data.errors) {
-                    this.errors = Object.values(error.response.data.errors).flat();
+                console.error(error);
+                if (error.response && error.response.data && error.response.data.message) {
+                    this.errors = [error.response.data.message];
                 } else {
-                    console.error('An error occurred:', error);
+                    this.errors.push("An unexpected error occurred.");
                 }
             }
+        },
+        setBaseUrl(url) {
+            this.baseUrl = url;
+            localStorage.setItem('api_base_url', url);
         }
     }
 };
