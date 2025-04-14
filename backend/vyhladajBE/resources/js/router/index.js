@@ -37,7 +37,8 @@ const router = createRouter({
             path: '/detail-movie/:id',
             name: 'detail movie',
             component: DetailMovie,
-        },{
+        },
+        {
             path: '/detail-tv-series/:id',
             name: 'detail series',
             component: DetailSeries,

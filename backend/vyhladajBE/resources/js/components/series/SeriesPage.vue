@@ -1,7 +1,7 @@
 <template>
     <div class="background-color">
         <div class="background">
-            <div class="grid-wrapper">
+            <div class="grid-wrapper" :key="route.fullPath">
                 <div
                     v-for="release in filteredReleases"
                     :key="release.id"
@@ -24,60 +24,65 @@
     </div>
 </template>
 
-<script>
-import { useMovieStore } from '@/store/store.js';
+<script setup>
+import { onBeforeMount, watch, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useSeriesStore } from '@/store/store.js';
 import axios from 'axios';
 
-export default {
-    setup() {
-        const store = useMovieStore();
+const route = useRoute();
+const router = useRouter();
+const store = useSeriesStore();
 
-        async function fetchReleases() {
-            try {
-                const { data } = await axios.get('https://api.themoviedb.org/3/tv/popular', {
-                    params: { api_key: '27669d5eff252733bade61094dcd4d38', page: store.currentPage }
-                });
-                store.addReleases(data.results);
-                store.setTotalPages(data.total_pages);
-            } catch (error) {
-                console.error('Error fetching releases:', error);
-            }
-        }
-
-        return { store, fetchReleases };
-    },
-    mounted() {
-        if (!this.store.releases.length) {
-            this.fetchReleases();
-        } else {
-            this.$nextTick(() => window.scrollTo(0, this.store.scrollPosition));
-        }
-    },
-    computed: {
-        filteredReleases() {
-            return this.store.releases.filter(release => release.poster_path);
-        }
-    },
-    methods: {
-        async loadMore() {
-            if (this.store.currentPage < this.store.totalPages) {
-                this.store.setCurrentPage(this.store.currentPage + 1);
-                await this.fetchReleases();
-            }
-        },
-        goToSeriesDetail(seriesId) {
-            this.store.setScrollPosition(window.scrollY);
-            this.$router.push({ name: 'detail series', params: { id: seriesId } });
-        },
-        getProxiedImageUrl(posterPath) {
-            return posterPath
-                ? `https://image.tmdb.org/t/p/w500${posterPath}`
-                : 'https://via.placeholder.com/200x300?text=No+Image';
-        },
-        handleImageError(event) {
-            event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
-        }
+const fetchReleases = async () => {
+    try {
+        const { data } = await axios.get('https://api.themoviedb.org/3/tv/popular', {
+            params: { api_key: '27669d5eff252733bade61094dcd4d38', page: store.currentPage }
+        });
+        store.addReleases(data.results);
+        store.setTotalPages(data.total_pages);
+    } catch (error) {
+        console.error('Error fetching series:', error);
     }
+};
+
+const reloadComponent = async () => {
+    store.resetStore();
+    await fetchReleases();
+};
+
+onBeforeMount(async () => {
+    await reloadComponent();
+});
+
+watch(() => route.fullPath, async () => {
+    await reloadComponent();
+});
+
+const filteredReleases = computed(() => {
+    return store.releases.filter(release => release.poster_path);
+});
+
+const loadMore = async () => {
+    if (store.currentPage < store.totalPages) {
+        store.setCurrentPage(store.currentPage + 1);
+        await fetchReleases();
+    }
+};
+
+const goToSeriesDetail = (seriesId) => {
+    store.setScrollPosition(window.scrollY);
+    router.push({ name: 'detail series', params: { id: seriesId } });
+};
+
+const getProxiedImageUrl = (posterPath) => {
+    return posterPath
+        ? `https://image.tmdb.org/t/p/w500${posterPath}`
+        : 'https://via.placeholder.com/200x300?text=No+Image';
+};
+
+const handleImageError = (event) => {
+    event.target.src = 'https://via.placeholder.com/200x300?text=No+Image';
 };
 </script>
 

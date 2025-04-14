@@ -25,12 +25,13 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeMount, watch, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '@/store/store.js';
 import axios from 'axios';
 
 const route = useRoute();
+const router = useRouter();
 const store = useMovieStore();
 
 const fetchReleases = async () => {
@@ -41,24 +42,22 @@ const fetchReleases = async () => {
         store.addReleases(data.results);
         store.setTotalPages(data.total_pages);
     } catch (error) {
-        console.error('Error fetching releases:', error);
+        console.error('Error fetching movies:', error);
     }
 };
 
-const reloadComponent = () => {
-    console.log("Reloading component on route change");
-    fetchReleases();
+const reloadComponent = async () => {
+    store.resetStore();
+    await fetchReleases();
 };
 
-onMounted(() => {
-    if (!store.releases.length) {
-        fetchReleases();
-    } else {
-        window.scrollTo(0, store.scrollPosition);
-    }
+onBeforeMount(async () => {
+    await reloadComponent();
 });
 
-watch(() => route.fullPath, reloadComponent);
+watch(() => route.fullPath, async () => {
+    await reloadComponent();
+});
 
 const filteredReleases = computed(() => {
     return store.releases.filter(release => release.poster_path);
