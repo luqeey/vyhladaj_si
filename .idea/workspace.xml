@@ -6,19 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/bootstrap/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LoginPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/NavBar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ProfilePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ProfilePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/RegisterPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/RegisterPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +52,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "users",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/maximfruhwald/Documents/GitHub/vyhladaj_si/backend/vyhladajBE/resources/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

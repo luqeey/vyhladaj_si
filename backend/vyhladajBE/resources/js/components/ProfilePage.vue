@@ -44,6 +44,9 @@
                     <p class="text-center text-sm text-gray-300">{{ movie.title }}</p>
                 </div>
             </div>
+            </div>
+        </div>
+    </div>
         </div>
     </div>
 </template>
