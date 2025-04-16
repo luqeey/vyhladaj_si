@@ -38,10 +38,14 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await axios.post(`${this.baseUrl}/api/login`, this.form); // Use dynamic base URL
+                const response = await axios.post(`${this.baseUrl}/api/login`, this.form);
                 const { token, user } = response.data;
 
                 localStorage.setItem('auth_token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Update the authState to reflect the login
+                authState.setUser(user);
 
                 this.$router.push({
                     name: 'ProfilePage',
@@ -55,7 +59,7 @@ export default {
                     this.errors.push("An unexpected error occurred.");
                 }
             }
-        },
+        }
         setBaseUrl(url) {
             this.baseUrl = url;
             localStorage.setItem('api_base_url', url);

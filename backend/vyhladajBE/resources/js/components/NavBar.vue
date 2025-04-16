@@ -1,13 +1,12 @@
 <template>
     <div class="bg-[#121212] relative navbar">
         <div class="flex items-center h-[70px] justify-between w-full mx-auto">
+            <!-- Logo and Home Link -->
             <router-link to="/" class="text-[#F8E7F8]">
-                <img
-                    class="w-52"
-                    src="../../assets/nachoverse-logo.png"
-                    alt="Logo"
-                />
+                <img class="w-52" src="../../assets/nachoverse-logo.png" alt="Logo" />
             </router-link>
+
+            <!-- Desktop Menu Links -->
             <div class="hidden md:flex space-x-8">
                 <router-link
                     to="/movies"
@@ -31,13 +30,24 @@
                     Cinemas
                 </router-link>
                 <router-link
-                    to="/profile/:id"
+                    v-if="isAuthenticated"
+                    :to="`/profile/${userId}`"
                     class="nav-link"
-                    :class="{ 'active': $route.path === '/profile/:id' }"
+                    :class="{ 'active': $route.name === 'ProfilePage' }"
                 >
                     Profile
                 </router-link>
+                <router-link
+                    v-else
+                    to="/login"
+                    class="nav-link"
+                    :class="{ 'active': $route.path === '/login' }"
+                >
+                    Login
+                </router-link>
             </div>
+
+            <!-- Mobile Menu Toggle Button -->
             <button
                 class="block md:hidden text-[#F8E7F8] relative z-50"
                 @click="toggleMenu"
@@ -64,6 +74,8 @@
                 </svg>
             </button>
         </div>
+
+        <!-- Mobile Menu Links (Visible when menuOpen is true) -->
         <div
             class="md:hidden flex flex-col items-center bg-[#121212] text-[#F8E7F8] space-y-4 py-4 fixed inset-x-0 top-[70px] z-[999] shadow-lg"
             v-show="menuOpen"
@@ -92,107 +104,155 @@
             >
                 Cinemas
             </router-link>
+            <router-link
+                v-if="isAuthenticated"
+                :to="`/profile/${userId}`"
+                class="nav-link"
+                :class="{ 'active': $route.name === 'ProfilePage' }"
+                @click="closeMenu"
+            >
+                Profile
+            </router-link>
+            <router-link
+                v-else
+                to="/login"
+                class="nav-link"
+                :class="{ 'active': $route.path === '/login' }"
+                @click="closeMenu"
+            >
+                Login
+            </router-link>
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { useRoute } from "vue-router";
+<script setup>
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { authState } from '@/authState';
 
 const route = useRoute();
 const menuOpen = ref(false);
-const windowWidth = ref(window.innerWidth);
 
 const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
+    menuOpen.value = !menuOpen.value;
 };
 
 const closeMenu = () => {
-  menuOpen.value = false;
+    menuOpen.value = false;
 };
 
 const updateWindowWidth = () => {
-  windowWidth.value = window.innerWidth;
-  if (windowWidth.value > 900) closeMenu();
+    if (window.innerWidth > 900) closeMenu();
 };
 
 onMounted(() => {
-  window.addEventListener("resize", updateWindowWidth);
+    window.addEventListener('resize', updateWindowWidth);
+
+    const token = localStorage.getItem("auth_token");
+    const user = localStorage.getItem("user");
+
+    if (token && user) {
+        try {
+            const parsedUser = JSON.parse(user);
+            authState.setUser(parsedUser);
+        } catch (e) {
+            console.warn("Invalid user in localStorage.");
+        }
+    }
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateWindowWidth);
+    window.removeEventListener("resize", updateWindowWidth);
 });
+
+// Reactive authentication state
+const isAuthenticated = ref(authState.isAuthenticated);
+const userId = ref(authState.userId);
+
+// Watch the authState for changes
+watch(() => authState.isAuthenticated, (newValue) => {
+    isAuthenticated.value = newValue;
+    userId.value = authState.userId;
+});
+</script>
+
+
+onBeforeUnmount(() => {
+    window.removeEventListener("resize", updateWindowWidth);
+});
+
+const isAuthenticated = ref(authState.isAuthenticated);
+const userId = ref(authState.userId);
 </script>
 
 <style scoped>
 .navbar {
-  height: 70px;
-  margin-bottom: 0;
-  padding-bottom: 0;
+    height: 70px;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 button, .mobile-menu {
-  transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .mobile-menu {
-  animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-  0% {
-      opacity: 0;
-      transform: translateY(-10px);
-  }
-  100% {
-      opacity: 1;
-      transform: translateY(0);
-  }
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .navbar {
-  width: 100%;
-  padding-left: 8px;
-  padding-right: 8px;
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 @media (width >= 30rem) {
-  .navbar > .flex {
-      padding-left: 80px;
-      padding-right: 80px;
-  }
+    .navbar > .flex {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
 }
 
 .nav-link {
-  position: relative;
-  color: #F8E7F8;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
+    position: relative;
+    color: #F8E7F8;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
 
 .nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, #FACB3D, #F1A601);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-in-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #FACB3D, #F1A601);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
 }
 
 .nav-link:hover, .nav-link.active {
-  color: transparent;
-  background-image: linear-gradient(to right, #FACB3D, #F1A601);
-  -webkit-background-clip: text;
-  background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #FACB3D, #F1A601);
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .nav-link:hover::after, .nav-link.active::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 </style>
