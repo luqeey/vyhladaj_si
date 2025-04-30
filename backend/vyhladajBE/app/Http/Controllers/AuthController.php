@@ -52,8 +52,9 @@ class AuthController extends Controller
         ], 401);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request, $userId)
     {
+        // Optionally, check if $userId matches the authenticated user
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

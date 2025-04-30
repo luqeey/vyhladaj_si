@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios';
+import { authState } from "../authState.js"
 
 export default {
     name: 'LoginPage',
@@ -44,7 +45,6 @@ export default {
                 localStorage.setItem('auth_token', token);
                 localStorage.setItem('user', JSON.stringify(user));
 
-                // Update the authState to reflect the login
                 authState.setUser(user);
 
                 this.$router.push({
@@ -52,14 +52,21 @@ export default {
                     params: { id: user.id }
                 });
             } catch (error) {
-                console.error(error);
-                if (error.response && error.response.data && error.response.data.message) {
-                    this.errors = [error.response.data.message];
+                console.error('Login Error:', error);
+                if (error.response) {
+                    console.error('Error response:', error.response);
+                    if (error.response.data && error.response.data.message) {
+                        this.errors = [error.response.data.message];
+                    } else {
+                        this.errors.push("An unexpected error occurred.");
+                    }
                 } else {
                     this.errors.push("An unexpected error occurred.");
                 }
             }
-        }
+        },
+
+
         setBaseUrl(url) {
             this.baseUrl = url;
             localStorage.setItem('api_base_url', url);

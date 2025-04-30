@@ -83,17 +83,25 @@ export default {
         async logout() {
             try {
                 const token = localStorage.getItem('auth_token');
-                await axios.post("http://127.0.0.1:8000/api/logout", {}, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-            } catch (error) {
-                console.warn('Logout failed:', error);
-            }
+                const userId = this.$route.params.userId;
 
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('user');
-            authState.clear();
-            this.$router.push('/login');
+                await axios.post(`http://127.0.0.1:8000/api/profile/${userId}/api/logout`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('user');
+
+                authState.setUser(null);
+                console.log('Redirecting...');
+
+                // Redirect to homepage and include a query param
+                this.$router.push({ path: '/', query: { loggedOut: 'true' } });
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
         }
     }
 };

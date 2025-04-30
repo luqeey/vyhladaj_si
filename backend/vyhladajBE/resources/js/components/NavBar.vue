@@ -1,12 +1,9 @@
 <template>
     <div class="bg-[#121212] relative navbar">
         <div class="flex items-center h-[70px] justify-between w-full mx-auto">
-            <!-- Logo and Home Link -->
             <router-link to="/" class="text-[#F8E7F8]">
                 <img class="w-52" src="../../assets/nachoverse-logo.png" alt="Logo" />
             </router-link>
-
-            <!-- Desktop Menu Links -->
             <div class="hidden md:flex space-x-8">
                 <router-link
                     to="/movies"
@@ -29,25 +26,28 @@
                 >
                     Cinemas
                 </router-link>
-                <router-link
-                    v-if="isAuthenticated"
-                    :to="`/profile/${userId}`"
-                    class="nav-link"
-                    :class="{ 'active': $route.name === 'ProfilePage' }"
-                >
-                    Profile
-                </router-link>
-                <router-link
-                    v-else
-                    to="/login"
-                    class="nav-link"
-                    :class="{ 'active': $route.path === '/login' }"
-                >
-                    Login
-                </router-link>
+
+                <!-- Conditional rendering of Login/Profile -->
+                <template v-if="user">
+                    <router-link
+                        to="/profile/me"
+                        class="nav-link"
+                        :class="{ 'active': $route.path.startsWith('/profile') }"
+                    >
+                        Profile
+                    </router-link>
+                </template>
+                <template v-else>
+                    <router-link
+                        to="/login"
+                        class="nav-link"
+                        :class="{ 'active': $route.path === '/login' }"
+                    >
+                        Login
+                    </router-link>
+                </template>
             </div>
 
-            <!-- Mobile Menu Toggle Button -->
             <button
                 class="block md:hidden text-[#F8E7F8] relative z-50"
                 @click="toggleMenu"
@@ -63,7 +63,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
                 <svg
-                    v-if="menuOpen"
+                    v-else
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6 transition-transform transform duration-300 ease-in-out"
                     fill="none"
@@ -75,7 +75,6 @@
             </button>
         </div>
 
-        <!-- Mobile Menu Links (Visible when menuOpen is true) -->
         <div
             class="md:hidden flex flex-col items-center bg-[#121212] text-[#F8E7F8] space-y-4 py-4 fixed inset-x-0 top-[70px] z-[999] shadow-lg"
             v-show="menuOpen"
@@ -104,35 +103,42 @@
             >
                 Cinemas
             </router-link>
-            <router-link
-                v-if="isAuthenticated"
-                :to="`/profile/${userId}`"
-                class="nav-link"
-                :class="{ 'active': $route.name === 'ProfilePage' }"
-                @click="closeMenu"
-            >
-                Profile
-            </router-link>
-            <router-link
-                v-else
-                to="/login"
-                class="nav-link"
-                :class="{ 'active': $route.path === '/login' }"
-                @click="closeMenu"
-            >
-                Login
-            </router-link>
+
+            <!-- Conditional rendering of Login/Profile in mobile view -->
+            <template v-if="user">
+                <router-link
+                    to="/profile/me"
+                    class="nav-link"
+                    :class="{ 'active': $route.path.startsWith('/profile') }"
+                    @click="closeMenu"
+                >
+                    Profile
+                </router-link>
+            </template>
+            <template v-else>
+                <router-link
+                    to="/login"
+                    class="nav-link"
+                    :class="{ 'active': $route.path === '/login' }"
+                    @click="closeMenu"
+                >
+                    Login
+                </router-link>
+            </template>
         </div>
     </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { authState } from '@/authState';
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { useRoute } from "vue-router";
+import { authState } from "../authState";
 
 const route = useRoute();
 const menuOpen = ref(false);
+const windowWidth = ref(window.innerWidth);
+
+const user = computed(() => authState.user);
 
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
@@ -143,57 +149,43 @@ const closeMenu = () => {
 };
 
 const updateWindowWidth = () => {
-    if (window.innerWidth > 900) closeMenu();
+    windowWidth.value = window.innerWidth;
+    if (windowWidth.value > 900) closeMenu();
 };
 
 onMounted(() => {
-    window.addEventListener('resize', updateWindowWidth);
-
-    const token = localStorage.getItem("auth_token");
-    const user = localStorage.getItem("user");
-
-    if (token && user) {
-        try {
-            const parsedUser = JSON.parse(user);
-            authState.setUser(parsedUser);
-        } catch (e) {
-            console.warn("Invalid user in localStorage.");
-        }
-    }
+    window.addEventListener("resize", updateWindowWidth);
 });
 
 onBeforeUnmount(() => {
     window.removeEventListener("resize", updateWindowWidth);
 });
-
-// Reactive authentication state
-const isAuthenticated = ref(authState.isAuthenticated);
-const userId = ref(authState.userId);
-
-// Watch the authState for changes
-watch(() => authState.isAuthenticated, (newValue) => {
-    isAuthenticated.value = newValue;
-    userId.value = authState.userId;
-});
 </script>
 
+<style scoped>
+/* Add your existing styles here */
+</style>
 
-onBeforeUnmount(() => {
-    window.removeEventListener("resize", updateWindowWidth);
-});
-
-const isAuthenticated = ref(authState.isAuthenticated);
-const userId = ref(authState.userId);
-</script>
 
 <style scoped>
 .navbar {
     height: 70px;
     margin-bottom: 0;
     padding-bottom: 0;
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
-button, .mobile-menu {
+@media (width >= 30rem) {
+    .navbar > .flex {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+
+button,
+.mobile-menu {
     transition: all 0.3s ease-in-out;
 }
 
@@ -212,22 +204,9 @@ button, .mobile-menu {
     }
 }
 
-.navbar {
-    width: 100%;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-@media (width >= 30rem) {
-    .navbar > .flex {
-        padding-left: 80px;
-        padding-right: 80px;
-    }
-}
-
 .nav-link {
     position: relative;
-    color: #F8E7F8;
+    color: #f8e7f8;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
 }
@@ -239,20 +218,22 @@ button, .mobile-menu {
     bottom: -3px;
     width: 100%;
     height: 2px;
-    background: linear-gradient(to right, #FACB3D, #F1A601);
+    background: linear-gradient(to right, #facb3d, #f1a601);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
     color: transparent;
-    background-image: linear-gradient(to right, #FACB3D, #F1A601);
+    background-image: linear-gradient(to right, #facb3d, #f1a601);
     -webkit-background-clip: text;
     background-clip: text;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     transform: scaleX(1);
 }
 </style>
