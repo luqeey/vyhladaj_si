@@ -10,5 +10,8 @@ export const authState = reactive({
     clear() {
         this.isAuthenticated = false;
         this.userId = null;
+    },
+    get user() {
+        return this.isAuthenticated ? { id: this.userId } : null;
     }
 });

@@ -28,7 +28,7 @@
                 </router-link>
 
                 <!-- Conditional rendering of Login/Profile -->
-                <template v-if="user">
+                <template v-if="authState.isAuthenticated">
                     <router-link
                         to="/profile/me"
                         class="nav-link"
@@ -105,7 +105,7 @@
             </router-link>
 
             <!-- Conditional rendering of Login/Profile in mobile view -->
-            <template v-if="user">
+            <template v-if="authState.isAuthenticated">
                 <router-link
                     to="/profile/me"
                     class="nav-link"
@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import { authState } from "../authState";
 
@@ -138,8 +138,7 @@ const route = useRoute();
 const menuOpen = ref(false);
 const windowWidth = ref(window.innerWidth);
 
-const user = computed(() => authState.user);
-
+// Methods for handling menu visibility
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
 };
@@ -148,6 +147,7 @@ const closeMenu = () => {
     menuOpen.value = false;
 };
 
+// Handle resizing of window
 const updateWindowWidth = () => {
     windowWidth.value = window.innerWidth;
     if (windowWidth.value > 900) closeMenu();
@@ -164,10 +164,6 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* Add your existing styles here */
-</style>
-
-
-<style scoped>
 .navbar {
     height: 70px;
     margin-bottom: 0;

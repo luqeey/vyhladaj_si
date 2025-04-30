@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab5d3ccc-4caa-427c-845e-71c531a0ead9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/vyhladajBE/app/Http/Controllers/MovieController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/LoginPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/database/migrations/2025_04_14_071232_create_personal_access_tokens_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/database/migrations/2025_04_14_071232_create_personal_access_tokens_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/authState.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/authState.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/NavBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ProfilePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/ProfilePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/resources/js/components/series/DetailSeries.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/vyhladajBE/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vyhladajBE/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,8 +94,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.26053.13" />
-        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.26053.13" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PS-251.23774.466" />
+        <option value="bundled-php-predefined-a98d8de5180a-aaeaa8632555-com.jetbrains.php.sharedIndexes-PS-251.23774.466" />
       </set>
     </attachedChunks>
   </component>
@@ -121,6 +122,7 @@
       <workItem from="1741593982323" duration="12000" />
       <workItem from="1744611035559" duration="4144000" />
       <workItem from="1744783657916" duration="3505000" />
+      <workItem from="1746019183911" duration="18000" />
     </task>
     <servers />
   </component>

@@ -101,6 +101,20 @@ export default {
                 console.error('Error fetching network images:', error);
             }
         },
+        async likeSeries() {
+            try {
+                const token = localStorage.getItem('auth_token'); // Ensure the user is authenticated
+                await axios.post('http://127.0.0.1:8000/api/movies/like', {
+                    movie_id: this.series.id, // Use the series ID
+                }, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                alert('Series liked successfully!');
+            } catch (error) {
+                console.error('Error liking series:', error);
+                alert('Failed to like the series.');
+            }
+        }
     }
 };
 </script>
