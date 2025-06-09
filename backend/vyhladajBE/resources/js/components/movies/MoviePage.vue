@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, watch, computed } from 'vue';
+import { onBeforeMount, watch, computed, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '@/store/store.js';
 import axios from 'axios';
@@ -47,8 +47,14 @@ const fetchReleases = async () => {
 };
 
 const reloadComponent = async () => {
-    store.resetStore();
-    await fetchReleases();
+    // Only reset and fetch if releases are empty
+    if (store.releases.length === 0) {
+        store.resetStore();
+        await fetchReleases();
+    }
+    // Restore scroll position after DOM update
+    await nextTick();
+    window.scrollTo(0, store.scrollPosition || 0);
 };
 
 onBeforeMount(async () => {

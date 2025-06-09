@@ -30,13 +30,6 @@
                 >
                     Cinemas
                 </router-link>
-                <router-link
-                    to="/profile/:id"
-                    class="nav-link"
-                    :class="{ 'active': $route.path === '/profile/:id' }"
-                >
-                    Profile
-                </router-link>
             </div>
             <button
                 class="block md:hidden text-[#F8E7F8] relative z-50"
